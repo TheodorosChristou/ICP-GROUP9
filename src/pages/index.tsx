@@ -15,7 +15,9 @@ export default function Uploading(Observations){
 
     const valid = session
     const observation = Observations
+
     let user, role;
+
     const [observations, setobservationsState] = useState(observation.Observations);
 
     if (session?.user?.name?.toString()) {
@@ -34,7 +36,8 @@ export default function Uploading(Observations){
 
     const id = r._id
 
-    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Weather: r.Weather, Open: false}
+    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Weather: r.Weather, Open: false,  Response: r.Response, Response2: r.Response2}
+
     await axios.put(`/api/changes/${id}`, Update);
     setobservationsState(observations.filter((r,_i) => r._id !== id))
 
@@ -74,12 +77,12 @@ export default function Uploading(Observations){
             isLoading={isLoading}
             onSubmit={(observationform) => mutate(observationform)}
             />  </div> 
-            <div className="text-white mt-5 flex justify-center">{!validation && (<h1 className="text-white">Couldnt Upload</h1>)}</div>
+            <div className="bg-gray-300 rounded-lg text-white mt-5 font-semibold text-xl flex justify-center">{!validation && (<h1 className="text-white">Couldnt Upload</h1>)}</div>
             {session && (
-              <h1 className="text-white mt-5 font-semibold text-xl flex justify-center">On-Going Incidents</h1>
+              <h1 className="sm:p-3 bg-gray-400 rounded-lg w-[90%] md:max-w-sm mx-auto mt-7 font-bold text-xl flex justify-center">On-Going Incidents</h1>
             )}
             {observations?.filter((r,_i) => r.Open).map((r,i) => (
-              <div className="sm:p-10 bg-gray-300 rounded-lg w-[90%] md:max-w-sm mx-auto mt-7 sm:max-h-[20%]" key={i + 1}>
+              <div className="sm:p-10 bg-gray-400 rounded-lg w-[90%] md:max-w-sm mx-auto mt-7" key={i + 1}>
               <table className="w-full "key={i + 2}>
                 <thead key={i + 3}>
                   <tr key={i + 4}>
@@ -92,7 +95,7 @@ export default function Uploading(Observations){
                 </thead>
                 <tbody key={i + 10}>
                   <tr className="font-semibold flex flex-col items-center" key={i + 11}>
-                    <td key={i + 12} className="justify-center mb-1">
+                    <td key={i + 12} className="justify-center mb-2">
                     <span className="block sm:inline">Latitude: {r.Lat}</span>
                     </td>
                     <td key={i + 13} className="flex justify-center mb-2">
@@ -101,13 +104,16 @@ export default function Uploading(Observations){
                     <td key={i + 14} className="flex justify-center mb-2" >
                     <span className="block sm:inline">Observation: {r.Observation}</span>
                     </td>
-                    <td key={i + 15} className="flex justify-center">
+                    <td key={i + 15} className="flex justify-center mb-2">
                     <span className="block sm:inline">Weather: {r.Weather}</span>
                     </td>
-                    <td key={i+16}className="flex justify-center"><button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Update</button></td>
-                    {role == "admin" &&(<td key={i+17}className="flex justify-center"><button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Response</button></td>)}
-                    <td key={i+18} className="flex justify-center"><button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Delete</button></td>
-                    <td key={i+19} className="flex justify-center"><button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Close</button></td>
+                    <td key={i + 16} className="flex justify-center mb-2">
+                    <span className="block sm:inline">{(r.Response || r.Response2 )&&( "Response: " + r.Response + " " + r.Response2)}
+                    </span>
+                    </td>
+                    <td key={i+17}className="flex justify-center"><button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Update</button></td>
+                    {role == "admin" && (<td key={i+18} className="flex justify-center"><button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Delete</button></td>)}
+                    {role == "admin" && (<td key={i+19} className="flex justify-center"><button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Close</button></td>)}
                   </tr>
                 </tbody>
               </table>

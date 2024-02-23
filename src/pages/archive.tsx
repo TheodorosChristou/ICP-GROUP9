@@ -13,15 +13,19 @@ export default function Uploading(Observations){
     
     const{data: session} = useSession();
 
-    var valid = false
-    const observation = Observations
     let user, role;
-    const [observations, setobservationsState] = useState(observation.Observations);
 
     if (session?.user?.name?.toString()) {
-      user = session.user.name;
-      role = session.user.role;
-    }
+        user = session.user.name;
+        role = session.user.role;
+      }
+
+    var valid = false
+    const observation = Observations
+
+    const [observations, setobservationsState] = useState(observation.Observations);
+
+
 
     if(role == "admin")(
         valid = true
@@ -38,7 +42,7 @@ export default function Uploading(Observations){
 
     const id = r._id
 
-    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Weather: r.Weather, Open: false}
+    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Weather: r.Weather, Open: false, Response: r.Response, Response2: r.Response2}
     await axios.put(`/api/changes/${id}`, Update);
 
 
@@ -48,7 +52,7 @@ const handleOpen = async (r) => {
 
     const id = r._id
 
-    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Weather: r.Weather, Open: true}
+    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Weather: r.Weather, Open: true, Response: r.Response, Response2: r.Response2}
     await axios.put(`/api/changes/${id}`, Update);
 
 
@@ -83,10 +87,10 @@ const handleOpen = async (r) => {
         return(
         <div className="">
 
-            <h1 className="text-white mt-5 font-semibold text-xl flex justify-center">Archive</h1>
+            <h1 className="sm:p-3 bg-gray-400 rounded-lg w-[90%] md:max-w-sm mx-auto mt-7 font-bold text-xl flex justify-center">Archive</h1>
 
            {observations?.map((r,i) => (
-             <div className="sm:p-10 bg-gray-300 rounded-lg w-[90%] md:max-w-sm mx-auto mt-7 sm:max-h-[20%]" key={i + 1}>
+             <div className="sm:p-10 bg-gray-400 rounded-lg w-[90%] md:max-w-sm mx-auto mt-7 sm:max-h-[20%]" key={i + 1}>
              <table className="w-full "key={i + 2}>
                <thead key={i + 3}>
                  <tr key={i + 4}>
