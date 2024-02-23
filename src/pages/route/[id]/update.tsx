@@ -16,7 +16,7 @@ export default function Update(ObservationFormDetails){
 
     var valid: boolean
     
-    if(session?.user.role == "user"){
+    if(session){
         valid = true
     }else{
         valid = false
@@ -31,9 +31,6 @@ export default function Update(ObservationFormDetails){
     var validate: Boolean
 
     const observationformValues: ObservationValues = {Lat: values.Lat, Lon: values.Lon, Observation: values.Observation, Weather: values.Weather, Open: values.Open}
-    
-
-    console.log(observationformValues)
 
 
      const redirect = (url, asLink = true) =>

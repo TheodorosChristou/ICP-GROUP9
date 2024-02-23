@@ -51,7 +51,6 @@ export default function ObservationForm(props){
         <form
         onSubmit={handleSubmit((data)=>{
             onSubmit({...data, ...{Photos: [icon]}})
-            console.log(data)
         })}>
 
 <div>
@@ -80,7 +79,6 @@ export default function ObservationForm(props){
             {...register("Observation", FieldValidation(valid))}
             className="border-2 rounded-md p-2 ml-2 text-black w-full"
             type="string"
-            maxLength={25}
             placeholder= {"Observation"}
             />
             <p>{errors.Observation?.message}</p>
