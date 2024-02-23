@@ -74,7 +74,7 @@ export default function Uploading(Observations){
 
       if(valid){
          return(
-         <div>
+         <div className="">
             <div className="text-white mt-5"><ObservationForm
             isLoading={isLoading}
             onSubmit={(observationform) => mutate(observationform)}
