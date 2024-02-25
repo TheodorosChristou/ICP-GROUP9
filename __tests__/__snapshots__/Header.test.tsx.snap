@@ -1,0 +1,403 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should Show Log In when no session 1`] = `
+<div>
+  <div
+    class="fixed top-0 left-0 right-0 z-40 bg-white"
+  >
+    <nav
+      class="p-2 items-center w-full flex justify-between"
+      data-testid="navbar"
+    >
+      <div
+        class="text-black h-12 w-full gap-0 sm:gap-3 flex items-center justify-between"
+      >
+        <div
+          class="flex align-center"
+        >
+          <div
+            class="flex space-x-2"
+          >
+            <a
+              href="/"
+            >
+              <img
+                alt="image"
+                class="cursor-pointer"
+                data-nimg="1"
+                decoding="async"
+                height="60"
+                loading="lazy"
+                src="/_next/image?url=%2Fimg%2Fanchor.png&w=128&q=75"
+                srcset="/_next/image?url=%2Fimg%2Fanchor.png&w=64&q=75 1x, /_next/image?url=%2Fimg%2Fanchor.png&w=128&q=75 2x"
+                style="color: transparent;"
+                width="60"
+              />
+            </a>
+          </div>
+          <div
+            class="flex space-x-2 ml-1.5 mt-1.5 text-black mb-1 font-bold italic text-3xl py-1 px-1 xs:px-3 sm:px-1"
+          >
+            <a
+              href="/"
+            >
+              <h1>
+                Maritime
+              </h1>
+            </a>
+          </div>
+          <div
+            class="flex text-black space-x-2 cursor-default mt-3 mb-1 font-semibold italic text-xl py-1 sm:px-1"
+          >
+            <h1>
+              Emergency
+            </h1>
+          </div>
+        </div>
+        <div
+          class="justify-center items-center gap-1 flex 3xl:flex-1 flex-row 3xl:justify-end"
+        >
+          <div
+            class="mx-2.5 gap-1 hidden lg:flex"
+          >
+            <div
+              class="flex"
+            >
+              <a
+                class="text-xl hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"
+                href="/"
+              >
+                Home
+              </a>
+            </div>
+          </div>
+          <div
+            class="mx-2.5 gap-1 hidden lg:flex"
+          >
+            <div
+              class="flex"
+            >
+              <a
+                class="text-xl hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"
+                href="/map"
+              >
+                Map
+              </a>
+            </div>
+          </div>
+          <div
+            class="flex items-center mb-2 mx-2.5"
+          >
+            <div>
+              <h1
+                class="text-5xl cursor-default mb-1"
+              >
+                |
+              </h1>
+            </div>
+            <div
+              class="flex items-center text-xl mt-2 py-1 px-1 xs:px-3 sm:px-3 cursor-default"
+            >
+              <h1>
+                Welcome 
+              </h1>
+            </div>
+            <div
+              class="flex cursor-pointer"
+            >
+              <a
+                class="flex items-center text-xl mt-2 hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="h-6 w-6 mt-1"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                 Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+`;
+
+exports[`Should Show Log Out when has session 1`] = `
+<div>
+  <div
+    class="fixed top-0 left-0 right-0 z-40 bg-white"
+  >
+    <nav
+      class="p-2 items-center w-full flex justify-between"
+      data-testid="navbar"
+    >
+      <div
+        class="text-black h-12 w-full gap-0 sm:gap-3 flex items-center justify-between"
+      >
+        <div
+          class="flex align-center"
+        >
+          <div
+            class="flex space-x-2"
+          >
+            <a
+              href="/"
+            >
+              <img
+                alt="image"
+                class="cursor-pointer"
+                data-nimg="1"
+                decoding="async"
+                height="60"
+                loading="lazy"
+                src="/_next/image?url=%2Fimg%2Fanchor.png&w=128&q=75"
+                srcset="/_next/image?url=%2Fimg%2Fanchor.png&w=64&q=75 1x, /_next/image?url=%2Fimg%2Fanchor.png&w=128&q=75 2x"
+                style="color: transparent;"
+                width="60"
+              />
+            </a>
+          </div>
+          <div
+            class="flex space-x-2 ml-1.5 mt-1.5 text-black mb-1 font-bold italic text-3xl py-1 px-1 xs:px-3 sm:px-1"
+          >
+            <a
+              href="/"
+            >
+              <h1>
+                Maritime
+              </h1>
+            </a>
+          </div>
+          <div
+            class="flex text-black space-x-2 cursor-default mt-3 mb-1 font-semibold italic text-xl py-1 sm:px-1"
+          >
+            <h1>
+              Emergency
+            </h1>
+          </div>
+        </div>
+        <div
+          class="justify-center items-center gap-1 flex 3xl:flex-1 flex-row 3xl:justify-end"
+        >
+          <div
+            class="mx-2.5 gap-1 hidden lg:flex"
+          >
+            <div
+              class="flex"
+            >
+              <a
+                class="text-xl hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"
+                href="/"
+              >
+                Home
+              </a>
+            </div>
+          </div>
+          <div
+            class="mx-2.5 gap-1 hidden lg:flex"
+          >
+            <div
+              class="flex"
+            >
+              <a
+                class="text-xl hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"
+                href="/map"
+              >
+                Map
+              </a>
+            </div>
+          </div>
+          <div
+            class="flex items-center mb-2 mx-2.5"
+          >
+            <div>
+              <h1
+                class="text-5xl cursor-default mb-1"
+              >
+                |
+              </h1>
+            </div>
+            <div
+              class="flex items-center text-xl mt-2 py-1 px-1 xs:px-3 sm:px-3 cursor-default"
+            >
+              <h1>
+                Welcome 
+              </h1>
+            </div>
+            <div
+              class="flex cursor-pointer"
+            >
+              <a
+                class="flex items-center text-xl mt-2 hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="h-6 w-6 mt-1"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                 Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+`;
+
+exports[`Should Show archive when has session 1`] = `
+<div>
+  <div
+    class="fixed top-0 left-0 right-0 z-40 bg-white"
+  >
+    <nav
+      class="p-2 items-center w-full flex justify-between"
+      data-testid="navbar"
+    >
+      <div
+        class="text-black h-12 w-full gap-0 sm:gap-3 flex items-center justify-between"
+      >
+        <div
+          class="flex align-center"
+        >
+          <div
+            class="flex space-x-2"
+          >
+            <a
+              href="/"
+            >
+              <img
+                alt="image"
+                class="cursor-pointer"
+                data-nimg="1"
+                decoding="async"
+                height="60"
+                loading="lazy"
+                src="/_next/image?url=%2Fimg%2Fanchor.png&w=128&q=75"
+                srcset="/_next/image?url=%2Fimg%2Fanchor.png&w=64&q=75 1x, /_next/image?url=%2Fimg%2Fanchor.png&w=128&q=75 2x"
+                style="color: transparent;"
+                width="60"
+              />
+            </a>
+          </div>
+          <div
+            class="flex space-x-2 ml-1.5 mt-1.5 text-black mb-1 font-bold italic text-3xl py-1 px-1 xs:px-3 sm:px-1"
+          >
+            <a
+              href="/"
+            >
+              <h1>
+                Maritime
+              </h1>
+            </a>
+          </div>
+          <div
+            class="flex text-black space-x-2 cursor-default mt-3 mb-1 font-semibold italic text-xl py-1 sm:px-1"
+          >
+            <h1>
+              Emergency
+            </h1>
+          </div>
+        </div>
+        <div
+          class="justify-center items-center gap-1 flex 3xl:flex-1 flex-row 3xl:justify-end"
+        >
+          <div
+            class="mx-2.5 gap-1 hidden lg:flex"
+          >
+            <div
+              class="flex"
+            >
+              <a
+                class="text-xl hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"
+                href="/"
+              >
+                Home
+              </a>
+            </div>
+          </div>
+          <div
+            class="mx-2.5 gap-1 hidden lg:flex"
+          >
+            <div
+              class="flex"
+            >
+              <a
+                class="text-xl hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"
+                href="/map"
+              >
+                Map
+              </a>
+            </div>
+          </div>
+          <div
+            class="flex items-center mb-2 mx-2.5"
+          >
+            <div>
+              <h1
+                class="text-5xl cursor-default mb-1"
+              >
+                |
+              </h1>
+            </div>
+            <div
+              class="flex items-center text-xl mt-2 py-1 px-1 xs:px-3 sm:px-3 cursor-default"
+            >
+              <h1>
+                Welcome 
+              </h1>
+            </div>
+            <div
+              class="flex cursor-pointer"
+            >
+              <a
+                class="flex items-center text-xl mt-2 hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="h-6 w-6 mt-1"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                 Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+`;

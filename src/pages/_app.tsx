@@ -18,7 +18,7 @@ function MyApp({Component, pageProps: {session, ...pageProps}}) {
           <Header></Header>
           <GoogleAnalytics GA_MEASUREMENT_ID='G-53VCLCTQVC'/>
           <ConsentPopup />
-            <Component {...pageProps} />
+          <Component {...pageProps} />
           </QueryClientProvider>
 
 
