@@ -86,7 +86,7 @@ export default function DynamicMap({ mapData }) {
             <Marker position={[dataPoint.Lat, dataPoint.Lon]} icon={customIcon} key={dataPoint._id}>
               {/* Popup for each data point */}
               <Popup>
-                <div>{dataPoint.City} - {dataPoint.Description}</div>
+                <div>Lat: {dataPoint.Lat} - Lon: {dataPoint.Lon}</div>
               </Popup>
             </Marker>
           ))}
@@ -94,7 +94,7 @@ export default function DynamicMap({ mapData }) {
           {userLocation && (
             <Marker position={userLocation} icon={newUserIcon}>
               {/* Popup for enabling location access */}
-              <Popup className="text-white p-4 rounded-md">
+              <Popup>
                 <div>
                   <h3>
                     Latitude: {userLocation[0].toFixed(6)}, Longitude: {userLocation[1].toFixed(6)}
