@@ -7,6 +7,7 @@ export interface ObservationInterface{
     Lon: number;
     Weather: string;
     Response: string;
+    Response2: string;
     Open: Boolean;
     Date: string;
     Time: string;
@@ -19,6 +20,7 @@ const ObservationSchema = new Schema<ObservationInterface, Model<ObservationInte
     Lon: {type: Number},
     Weather: {type: String},
     Response: {type: String},
+    Response2: {type: String},
     Open: {type: Boolean},
     Date: {type: String},
     Time: {type: String},

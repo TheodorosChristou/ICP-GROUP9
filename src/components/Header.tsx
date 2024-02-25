@@ -7,6 +7,12 @@ import {signIn, signOut, useSession} from "next-auth/react"
 export default function Header() {
 
   const{data: session} = useSession();
+  let user, role;
+
+  if (session?.user?.name?.toString()) {
+    user = session.user.name;
+    role = session.user.role;
+  }
 
   return (
     <div className="fixed top-0 left-0 right-0 z-40 bg-white">
@@ -31,6 +37,14 @@ export default function Header() {
             <div className="mx-2.5 gap-1 hidden lg:flex">
               <div className="flex"><a className="text-xl hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full" href="/">Home</a></div>
             </div>
+            <div className="mx-2.5 gap-1 hidden lg:flex">
+              <div className="flex"><a className="text-xl hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full" href="/map">Map</a></div>
+            </div>
+            {(session && role == "admin") &&(<div>
+            <div className="mx-2.5 gap-1 hidden lg:flex">
+              <div className="flex"><a className="text-xl hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full" href="/archive">Archive</a></div>
+            </div>
+            </div>)}
             {!session &&(<div className="flex items-center mb-2 mx-2.5">
               <div><h1 className="text-5xl cursor-default mb-1">|</h1></div>
               <div className="flex cursor-pointer" onClick={()=> signIn()}><a className="flex items-center text-xl mt-2 hover:bg-gray-300 py-1 px-1 xs:px-3 sm:px-3 rounded-full"><LoginIcon className="h-6 w-6 mt-1" /> Log In</a></div>
