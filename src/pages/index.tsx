@@ -77,7 +77,7 @@ export default function Uploading(Observations){
             isLoading={isLoading}
             onSubmit={(observationform) => mutate(observationform)}
             />  </div> 
-            <div className="bg-gray-300 rounded-lg text-white mt-5 font-semibold text-xl flex justify-center">{!validation && (<h1 className="text-white">Couldnt Upload</h1>)}</div>
+            <div className=" rounded-lg text-white mt-5 font-semibold text-xl flex justify-center">{!validation && (<h1 className="text-white">Couldnt Upload</h1>)}</div>
             {session && (
               <h1 className="sm:p-3 bg-gray-400 rounded-lg w-[90%] md:max-w-sm mx-auto mt-7 font-bold text-xl flex justify-center">On-Going Incidents</h1>
             )}
