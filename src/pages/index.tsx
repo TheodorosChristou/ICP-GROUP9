@@ -73,7 +73,6 @@ export default function Uploading(Observations){
       if(valid){
          return(
          <div className="">
-            <link rel="manifest" href="manifest.json" />
             <div className="text-white mt-5"><ObservationForm
             isLoading={isLoading}
             onSubmit={(observationform) => mutate(observationform)}
