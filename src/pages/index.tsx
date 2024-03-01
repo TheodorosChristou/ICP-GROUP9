@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ObservationForm, {ObservationValues} from "../components/ObservationForm"
 import Observation from '../../models/Observation';
 import axios from "axios";
@@ -7,6 +7,7 @@ import FadeInDiv from '../components/FadeInDiv';
 import {useSession} from "next-auth/react"
 import { GetServerSideProps } from 'next';
 import dbConnect from '../../lib/dbConnect';
+import WeatherComponent, { WeatherResponse } from '../components/WeatherComponent';
 
 
 export default function Uploading(Observations){
@@ -36,7 +37,14 @@ export default function Uploading(Observations){
 
     const id = r._id
 
-    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Weather: r.Weather, Open: false,  Response: r.Response, Response2: r.Response2}
+    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Open: false,  
+      Response: r.Response, ResponseDescription: r.ResponseDescription, WeatherTemperature: r.Temperature,    
+      WeatherDescription: r.WeatherDescription,
+      WindSpeed: r.WindSpeed,
+      WindDirection: r.WindDirection,
+      AtmosphericPressure: r.AtmosphericPressure,
+      Humidity: r.Humidity,
+      Visibility: r.Visibility}
 
     await axios.put(`/api/changes/${id}`, Update);
     setobservationsState(observations.filter((r,_i) => r._id !== id))
@@ -62,10 +70,23 @@ export default function Uploading(Observations){
          validate = false
         }
         if(validate == true){
-            observationform.Open = true
-            console.log("creating new observation")
-            await axios.post("/api/upload/", observationform);
-            redirect("/");
+        
+          const { WeatherTemperature, WeatherDescription, WindSpeed, WindDirection, AtmosphericPressure, Humidity, Visibility }: WeatherResponse = await WeatherComponent(observationform.Lat, observationform.Lon);
+        
+          
+          observationform.Open = true
+          observationform.WeatherTemperature = WeatherTemperature
+          observationform.WeatherDescription = WeatherDescription
+          observationform.WindSpeed = WindSpeed
+          observationform.WindDirection = WindDirection
+          observationform.AtmosphericPressure = AtmosphericPressure
+          observationform.Humidity = Humidity
+          observationform.Visibility = Visibility
+
+          console.log("creating new observation")
+          console.log(observationform)
+          await axios.post("/api/upload/", observationform);
+          redirect("/");
         }
 
       });
@@ -91,29 +112,52 @@ export default function Uploading(Observations){
                     <th key={i + 7} className=""></th>
                     <th key={i + 8} className=""></th>
                     <th key={i + 9} className=""></th>
+                    <th key={i + 26} className=""></th>
                   </tr>
                 </thead>
                 <tbody key={i + 10}>
                   <tr className="font-semibold flex flex-col items-center" key={i + 11}>
-                    <td key={i + 12} className="justify-center mb-2">
+                    <td key={i + 11} className="justify-center mb-2">
                     <span className="block sm:inline">Latitude: {r.Lat}</span>
                     </td>
-                    <td key={i + 13} className="flex justify-center mb-2">
+                    <td key={i + 12} className="flex justify-center mb-2">
                     <span className="block sm:inline">Longitude: {r.Lon}</span>
                     </td>
-                    <td key={i + 14} className="flex justify-center mb-2" >
+                    <td key={i + 13} className="flex justify-center mb-2" >
                     <span className="block sm:inline">Observation: {r.Observation}</span>
                     </td>
+                    <td key={i + 14} className="flex justify-center mb-2">
+                    <span className="block sm:inline">Weather Temperature: {r.WeatherTemperature}</span>
+                    </td>
                     <td key={i + 15} className="flex justify-center mb-2">
-                    <span className="block sm:inline">Weather: {r.Weather}</span>
+                    <span className="block sm:inline">Weather Description: {r.WeatherDescription}</span>
                     </td>
                     <td key={i + 16} className="flex justify-center mb-2">
-                    <span className="block sm:inline">{(r.Response || r.Response2 )&&( "Response: " + r.Response + " " + r.Response2)}
-                    </span>
+                    <span className="block sm:inline">Wind Speed: {r.WindSpeed}</span>
                     </td>
-                    <td key={i+17}className="flex justify-center"><button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Update</button></td>
-                    {role == "admin" && (<td key={i+18} className="flex justify-center"><button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Delete</button></td>)}
-                    {role == "admin" && (<td key={i+19} className="flex justify-center"><button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Close</button></td>)}
+                    <td key={i + 17} className="flex justify-center mb-2">
+                    <span className="block sm:inline">Wind Direction: {r.WindDirection}</span>
+                    </td>
+                    <td key={i + 18} className="flex justify-center mb-2">
+                    <span className="block sm:inline">Atmospheric Pressure: {r.AtmosphericPressure}</span>
+                    </td>
+                    <td key={i + 19} className="flex justify-center mb-2">
+                    <span className="block sm:inline">Humidity: {r.Humidity}</span>
+                    </td>
+                    <td key={i + 20} className="flex justify-center mb-2">
+                    <span className="block sm:inline">Visibility: {r.Visibility}</span>
+                    </td>
+                    {r.Response.length != 0 &&(
+                    <td key={i + 21} className="flex justify-center mb-2">
+                    <span className="block sm:inline "><div  className="text-center">Response: {r.Response?.map((r,i) => (<p key={i + 27}>{r}</p>))}</div>
+                    </span>
+                    </td>)}
+                    {r.ResponseDescription != "" &&(<td key={i + 22} className="flex justify-center mb-2">
+                    <span className="block sm:inline">Response Description: {r.ResponseDescription}</span>
+                    </td>)}
+                    <td key={i+23}className="flex justify-center"><button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Update</button></td>
+                    {role == "admin" && (<td key={i+24} className="flex justify-center"><button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Delete</button></td>)}
+                    {role == "admin" && (<td key={i+25} className="flex justify-center"><button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Close</button></td>)}
                   </tr>
                 </tbody>
               </table>
