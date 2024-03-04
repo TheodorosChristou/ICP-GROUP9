@@ -31,6 +31,7 @@ export default function Update(ObservationFormDetails){
     var validate: Boolean
 
     const observationformValues: ObservationValues = {Lat: values.Lat, Lon: values.Lon, Observation: values.Observation, Open: values.Open, 
+      Date: values.Date, Time: values.Time,  
       Response: values.Response, ResponseDescription: values.ResponseDescription, WeatherTemperature: values.Temperature,    
       WeatherDescription: values.WeatherDescription,
       WindSpeed: values.WindSpeed,

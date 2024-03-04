@@ -43,6 +43,7 @@ export default function Uploading(Observations){
     const id = r._id
 
     const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Open: false,
+      Date: r.Date, Time: r.Time,  
        Response: r.Response, ResponseDescription: r.ResponseDescription, WeatherTemperature: r.Temperature,    
        WeatherDescription: r.WeatherDescription,
        WindSpeed: r.WindSpeed,
@@ -59,7 +60,8 @@ const handleOpen = async (r) => {
 
     const id = r._id
 
-    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Open: true, 
+    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Open: true,
+      Date: r.Date, Time: r.Time,   
       Response: r.Response, ResponseDescription: r.ResponseDescription, WeatherTemperature: r.Temperature,    
       WeatherDescription: r.WeatherDescription,
       WindSpeed: r.WindSpeed,

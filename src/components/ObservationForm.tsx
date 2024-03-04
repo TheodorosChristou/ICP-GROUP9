@@ -19,6 +19,8 @@ export interface ObservationValues {
     Lat: number;
     Lon: number;
     Open: boolean;
+    Date: String;
+    Time: string;
     Response: string[];
     ResponseDescription: string;
     WeatherTemperature: number;

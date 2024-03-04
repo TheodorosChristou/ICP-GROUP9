@@ -17,6 +17,7 @@ export default function Uploading(Observations){
     const valid = session
     const observation = Observations
 
+
     let user, role;
 
     const [observations, setobservationsState] = useState(observation.Observations);
@@ -37,7 +38,8 @@ export default function Uploading(Observations){
 
     const id = r._id
 
-    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Open: false,  
+    const Update: ObservationValues = {Lat: r.Lat, Lon: r.Lon, Observation: r.Observation, Open: false,
+      Date: r.Date, Time: r.Time,  
       Response: r.Response, ResponseDescription: r.ResponseDescription, WeatherTemperature: r.Temperature,    
       WeatherDescription: r.WeatherDescription,
       WindSpeed: r.WindSpeed,
@@ -83,6 +85,25 @@ export default function Uploading(Observations){
           observationform.Humidity = Humidity
           observationform.Visibility = Visibility
 
+          const today: Date = new Date();
+          const year: number = today.getFullYear();
+          const month: number = today.getMonth() + 1;
+          const day: number = today.getDate();
+          
+          const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        
+      
+          const currentDateAndTime: Date = new Date();
+      
+          const currentHour: number = currentDateAndTime.getHours();
+          const currentMinute: number = currentDateAndTime.getMinutes();
+          const currentSecond: number = currentDateAndTime.getSeconds();
+      
+          const formattedTime: string = `${currentHour}:${currentMinute}:${currentSecond}`;
+
+          observationform.Date = formattedDate
+          observationform.Time = formattedTime
+
           console.log("creating new observation")
           console.log(observationform)
           await axios.post("/api/upload/", observationform);
@@ -125,6 +146,12 @@ export default function Uploading(Observations){
                     </td>
                     <td key={i + 13} className="flex justify-center mb-2" >
                     <span className="block sm:inline">Observation: {r.Observation}</span>
+                    </td>
+                    <td key={i + 26} className="flex justify-center mb-2" >
+                    <span className="block sm:inline">Date: {r.Date}</span>
+                    </td>
+                    <td key={i + 27} className="flex justify-center mb-2" >
+                    <span className="block sm:inline">Time: {r.Time}</span>
                     </td>
                     <td key={i + 14} className="flex justify-center mb-2">
                     <span className="block sm:inline">Weather Temperature: {r.WeatherTemperature}</span>
