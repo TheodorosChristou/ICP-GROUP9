@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider} from "react-query"
 import { SessionProvider } from "next-auth/react"
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ConsentPopup from '../components/CookieConsent'
+import WeatherPage from '../pages/weatherpage'
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,7 @@ function MyApp({Component, pageProps: {session, ...pageProps}}) {
           <Header></Header>
           <GoogleAnalytics GA_MEASUREMENT_ID='G-53VCLCTQVC'/>
           <ConsentPopup />
-            <Component {...pageProps} />
+          <Component {...pageProps} />
           </QueryClientProvider>
 
 

@@ -30,14 +30,17 @@ export default function Update(ObservationFormDetails){
 
     var validate: Boolean
 
-    const observationformValues: ObservationValues = {Lat: values.Lat, Lon: values.Lon, Observation: values.Observation, Weather: values.Weather, Open: values.Open, Response: values.Response, Response2: values.Response2}
-    
-    var Answered = false
+    const observationformValues: ObservationValues = {Lat: values.Lat, Lon: values.Lon, Observation: values.Observation, Open: values.Open, 
+      Date: values.Date, Time: values.Time,  
+      Response: values.Response, ResponseDescription: values.ResponseDescription, WeatherTemperature: values.Temperature,    
+      WeatherDescription: values.WeatherDescription,
+      WindSpeed: values.WindSpeed,
+      WindDirection: values.WindDirection,
+      AtmosphericPressure: values.AtmosphericPressure,
+      Humidity: values.Humidity,
+      Visibility: values.Visibility}
 
-    if (values.Response2){
-      Answered = true
-    }
-
+      console.log(values.Response)
 
      const redirect = (url, asLink = true) =>
      asLink ? (window.location.href = url) : window.location.replace(url);
@@ -65,7 +68,6 @@ export default function Update(ObservationFormDetails){
          <div className="mt-10 text-white">
 <ObservationForm
       isLoading={isLoading}
-      Answered1 = {Answered}
     onSubmit={(observationform) => mutate(observationform) }
     values={observationformValues}
          label="update location"/>
