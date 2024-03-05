@@ -66,7 +66,6 @@ export default function DynamicMap({ mapData }) {
     return null;
   };
 
-
   return (
     <div className="fixed inset-0 flex items-center justify-center">
       <div className="w-screen h-screen">
@@ -82,7 +81,7 @@ export default function DynamicMap({ mapData }) {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {/* Rendering a marker for each datapoint in the mapData array */}
-          {mapData.map((dataPoint) => (
+          {mapData.filter((r,_i) => r.Open).map((dataPoint) => (
             <Marker position={[dataPoint.Lat, dataPoint.Lon]} icon={customIcon} key={dataPoint._id}>
               {/* Popup for each data point */}
               <Popup>

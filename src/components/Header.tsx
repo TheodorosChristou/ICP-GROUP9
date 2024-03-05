@@ -17,7 +17,7 @@ export default function Header() {
   return (
     <div className="fixed top-0 left-0 right-0 z-40 bg-white">
       <link rel="manifest" href="manifest.json" />
-      <nav className="p-2 items-center w-full flex justify-between">
+      <nav data-testid='navbar' className="p-2 items-center w-full flex justify-between">
         <div className="text-black h-12 w-full gap-0 sm:gap-3 flex items-center justify-between">
           <div className="flex align-center">
             <div className="flex space-x-2">

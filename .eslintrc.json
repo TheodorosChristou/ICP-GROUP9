@@ -5,7 +5,9 @@
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recomended"
   ],
   "rules": {
     "quotes": ["error", "double"],
