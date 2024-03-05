@@ -52,6 +52,8 @@ export default function Uploading(Observations){
        Humidity: r.Humidity,
        Visibility: r.Visibility}
     await axios.put(`/api/changes/${id}`, Update);
+    redirect("/archive");
+
 
 
 }
@@ -70,6 +72,7 @@ const handleOpen = async (r) => {
       Humidity: r.Humidity,
       Visibility: r.Visibility}
     await axios.put(`/api/changes/${id}`, Update);
+    redirect("/archive");
 
 
 }
@@ -160,7 +163,9 @@ const handleOpen = async (r) => {
                     </td>)}
                     <td key={i+23}className="flex justify-center"><button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Update</button></td>
                     {role == "admin" && (<td key={i+24} className="flex justify-center"><button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Delete</button></td>)}
-                    {role == "admin" && (<td key={i+25} className="flex justify-center"><button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Close</button></td>)}
+                    {role == "admin" && r.Open && (<td key={i+25} className="flex justify-center"><button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Close</button></td>)}
+                    {role == "admin" && !r.Open && (<td key={i+25} className="flex justify-center"><button onClick={() => handleOpen(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Open</button></td>)}
+
                   </tr>
                 </tbody>
               </table>
