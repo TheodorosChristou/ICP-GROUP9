@@ -192,7 +192,7 @@ export default function Uploading(Observations){
             ))}
         </div>)
       }else{
-        return <div className="flex items-center justify-center"><FadeInDiv><div className="container mx-auto my-8 p-8 bg-white shadow-md">
+        return <div className="flex items-center justify-center"><FadeInDiv><link rel="manifest" href="manifest.json" /><div className="container mx-auto my-8 p-8 bg-white shadow-md">
         <h1 className="text-2xl font-bold mb-4">Unauthorized!</h1>
         <p>This page cannot be accessed without logging in!.</p>
       </div></FadeInDiv></div>
