@@ -14,7 +14,7 @@ export default function Uploading(Observations){
     
     const{data: session} = useSession();
 
-    const valid = session
+    var valid = session
     const observation = Observations
 
 
@@ -26,6 +26,7 @@ export default function Uploading(Observations){
       user = session.user.name;
       role = session.user.role;
     }
+
 
     const handleDelete = async (id) => {
 

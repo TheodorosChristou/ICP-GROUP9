@@ -78,7 +78,13 @@ export default function ObservationForm(props){
         <form
           onSubmit={handleSubmit((data) => {
             // Extract selected options from the Response object
-            const selectedOptions = ResponseList.filter((option) => data.Response[option]);
+            var selectedOptions = ResponseList.filter((option) => data.Response?.[option]);
+            if(selectedOptions.length == 0){
+              selectedOptions = []
+            }else{
+              selectedOptions = selectedOptions
+            }
+            console.log(selectedOptions.length)
             onSubmit({ ...data, Response: selectedOptions });
           })}
         >

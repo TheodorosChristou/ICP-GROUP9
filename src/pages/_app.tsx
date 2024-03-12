@@ -26,7 +26,7 @@ function MyApp({Component, pageProps: {session, ...pageProps}}) {
   
     return (
       <SessionProvider session={session}>
-      <div className="bg-black min-h-screen  pt-[64px] overflow-x-hidden">
+      <div className="bg-black min-h-screen  pt-[64px] overflow-x-hidden global-bg">
 
           <Heading></Heading>
           <QueryClientProvider client={queryClient}>
