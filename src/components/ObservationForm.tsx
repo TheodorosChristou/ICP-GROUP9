@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {Control, SubmitHandler, useForm, useWatch } from "react-hook-form";
+import {Control, SubmitHandler, useForm, useWatch, Controller  } from "react-hook-form";
 import FieldValidation from "./FieldValidation";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
@@ -18,28 +18,19 @@ export interface ObservationValues {
     Observation: string;
     Lat: number;
     Lon: number;
-    Weather: string;
     Open: boolean;
-    Response: string;
-    Response2: string;
-  }
-
-  function FirstResponseWatched({ control }: { control: Control<ObservationValues> }) {
-    const firstResponse = useWatch({
-      control,
-      name: "Response",
-      defaultValue: "", // default value before the render
-    })
-
-    var valid_field = false
-
-    console.log(firstResponse)
-
-    if (firstResponse != ""){
-      valid_field = true
-    }
-
-    return valid_field
+    Date: String;
+    Time: string;
+    Response: string[];
+    ResponseDescription: string;
+    WeatherTemperature: number;
+    WeatherDescription: string;
+    WindSpeed: number;
+    WindDirection: number;
+    AtmosphericPressure: number;
+    Humidity: number;
+    Visibility: number;
+    
   }
 
 
@@ -57,14 +48,21 @@ export default function ObservationForm(props){
         role = session.user.role;
       }
 
-    const ResponseList = ['','Staff', 'Vessels', 'Emergency Services', 'Public Vessels'];
+    role = "admin"
 
+    const ResponseList = ['Staff', 'Vessels', 'Emergency Services', 'Public Vessels'];
 
  
   
     const {onSubmit, isLoading, triggerReset, values, label, watch} = props;
     const {register, control ,  handleSubmit, formState:{errors, dirtyFields, touchedFields, isDirty}, reset} = useForm<ObservationValues>({
-        defaultValues: {...values},
+      defaultValues: {
+        ...values,
+        Response: ResponseList.reduce((acc, option) => {
+          acc[option] = values?.Response?.includes(option) || false;
+          return acc;
+        }, {}),
+      },
       });
 
       useEffect(() => {
@@ -73,8 +71,6 @@ export default function ObservationForm(props){
         }
       }, [triggerReset, reset]);
 
-
-      var Answered1 = props.Answered1
 
       
       
@@ -85,9 +81,18 @@ export default function ObservationForm(props){
         <div>
         </div>
         <form
-        onSubmit={handleSubmit((data)=>{
-            onSubmit({...data})
-        })}>
+          onSubmit={handleSubmit((data) => {
+
+            var selectedOptions = ResponseList.filter((option) => data.Response?.[option]);
+            if(selectedOptions.length == 0){
+              selectedOptions = []
+            }else{
+              selectedOptions = selectedOptions
+            }
+            console.log(selectedOptions.length)
+            onSubmit({ ...data, Response: selectedOptions });
+          })}
+        >
 
 <div>
             <label className="font-semibold"> {"Latitude"} </label>
@@ -122,49 +127,41 @@ export default function ObservationForm(props){
             <p>{errors.Observation?.message}</p>
             </div>
 
-            <div>
-            <label className="font-semibold"> {"Weather"} </label>
-            <input
-            {...register("Weather", FieldValidation(valid))}
-            className="border-2 rounded-md p-2 ml-2 text-black w-full"
-            type="string"
-            maxLength={50}
-            placeholder={"Weather"}
-            />
-            <p>{errors.Weather?.message}</p>
-            </div>
+            {role === 'admin' && (
+  <div>
+    <label className="font-semibold">Response:</label>
+    {ResponseList.map((option) => (
+      <div key={option}>
+        <Controller
+        // @ts-ignore
+          name={`Response.${option}`}
+          control={control}
+          defaultValue={false}
+          render={({ field }) => (
+            <label /* @ts-ignore */>
+              <input type="checkbox" {...field} checked={field.value} />
+              {option}
+            </label>
+          )}
+        />
+      </div>
+    ))}
+    <p>{errors.Response?.message}</p>
+  </div>
+)}
 
-            { role == "admin" &&(
-            <div>
-            <label className="font-semibold">Response:</label>
-            <select
+          {(role == "admin" && (
+              <div>
+              <label className="font-semibold"> {"Response Description"} </label>
+              <input
+              {...register("ResponseDescription")}
               className="border-2 rounded-md p-2 ml-2 text-black w-full"
-              {...register('Response')}>
-              <option value="" disabled selected>Select Response</option>
-              {ResponseList.map((r,i) => (
-                <option className= "text-black"key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
-            <p>{errors.Response?.message}</p>
-            </div>)}
-
-            {(role == "admin" && (FirstResponseWatched({control}) || Answered1)) && (
-            <div>
-            <label className="font-semibold">Response 2:</label>
-            <select
-              className="border-2 rounded-md p-2 ml-2 text-black w-full"
-              {...register('Response2')}>
-              <option value="" disabled selected>Select Response</option>
-              {ResponseList.map((r,i) => (
-                <option className= "text-black"key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
-            <p>{errors.Response2?.message}</p>
-            </div>)}
+              type="string"
+              placeholder= {"Response Description"}
+              />
+              <p>{errors.ResponseDescription?.message}</p>
+              </div>
+          ))}
 
             <div className=" flex justify-center">
                 <div className="flex justify-center mt-5 bg-black text-white rounded-full w-full">

@@ -22,22 +22,26 @@ export default function Update(ObservationFormDetails){
         valid = false
     }
 
+    valid=true
+
 
     const ObservationValue = values
 
     const [validation, setValidation] = useState(true);
 
-
     var validate: Boolean
 
-    const observationformValues: ObservationValues = {Lat: values.Lat, Lon: values.Lon, Observation: values.Observation, Weather: values.Weather, Open: values.Open, Response: values.Response, Response2: values.Response2}
-    
-    var Answered = false
+    const ResponseList = ['Staff', 'Vessels', 'Emergency Services', 'Public Vessels'];
 
-    if (values.Response2){
-      Answered = true
-    }
-
+    const observationformValues: ObservationValues = {Lat: values.Lat, Lon: values.Lon, Observation: values.Observation, Open: values.Open, 
+      Date: values.Date, Time: values.Time,  
+      Response: ResponseList.filter(option => values.Response?.includes(option)) || [], ResponseDescription: values.ResponseDescription, WeatherTemperature: values.Temperature,    
+      WeatherDescription: values.WeatherDescription,
+      WindSpeed: values.WindSpeed,
+      WindDirection: values.WindDirection,
+      AtmosphericPressure: values.AtmosphericPressure,
+      Humidity: values.Humidity,
+      Visibility: values.Visibility}
 
      const redirect = (url, asLink = true) =>
      asLink ? (window.location.href = url) : window.location.replace(url);
@@ -53,6 +57,7 @@ export default function Update(ObservationFormDetails){
       }
       if(validate == true){
         console.log("updating location");
+        console.log(observationform)
         await axios.put(`/api/changes/${ObservationValue._id}`, observationform);
         redirect("/")}
 
@@ -65,7 +70,6 @@ export default function Update(ObservationFormDetails){
          <div className="mt-10 text-white">
 <ObservationForm
       isLoading={isLoading}
-      Answered1 = {Answered}
     onSubmit={(observationform) => mutate(observationform) }
     values={observationformValues}
          label="update location"/>

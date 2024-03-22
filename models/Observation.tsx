@@ -5,12 +5,18 @@ export interface ObservationInterface{
     Observation: string;
     Lat: number;
     Lon: number;
-    Weather: string;
-    Response: string;
-    Response2: string;
+    Response: string[];
+    ResponseDescription: string;
     Open: Boolean;
     Date: string;
     Time: string;
+    WeatherTemperature: number;
+    WeatherDescription: string;
+    WindSpeed: number;
+    WindDirection: number;
+    AtmosphericPressure: number;
+    Humidity: number;
+    Visibility: number;
 
 }
 
@@ -18,12 +24,19 @@ const ObservationSchema = new Schema<ObservationInterface, Model<ObservationInte
     Observation: {type: String},
     Lat: {type: Number},
     Lon: {type: Number},
-    Weather: {type: String},
-    Response: {type: String},
-    Response2: {type: String},
+    Response: {type:  [String]},
+    ResponseDescription: {type: String},
     Open: {type: Boolean},
     Date: {type: String},
     Time: {type: String},
+    WeatherTemperature: {type: Number},
+    WeatherDescription: {type: String},
+    WindSpeed: {type: Number},
+    WindDirection: {type: Number},
+    AtmosphericPressure: {type: Number},
+    Humidity: {type: Number},
+    Visibility: {type: Number},
+
 
 
 })
