@@ -5,12 +5,9 @@ import 'leaflet/dist/leaflet.css';
 import markIcon from '../../public/img/mark.ico';
 import userIcon from '../../public/img/user.ico';
 
-
-
 export default function DynamicMap({ mapData }) {
   const [userLocation, setUserLocation] = useState<LatLngTuple | null>(null);
   const [isDefaultLocation, setIsDefaultLocation] = useState<boolean>(false);
-
 
   // Custom Icon for other markers
   const customIcon = new L.Icon({
@@ -29,18 +26,25 @@ export default function DynamicMap({ mapData }) {
       // Check if geolocation is supported
       if ('geolocation' in navigator) {
         // Ask for permission
-        const permissionGranted = window.confirm(("Do you want to enable location services?"));
-        
+        const permissionGranted = window.confirm("Do you want to enable location services?");
+
         if (permissionGranted) {
           try {
-            const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-              navigator.geolocation.getCurrentPosition(resolve, reject);
-            });
-
-            const { latitude, longitude } = position.coords;
-            setUserLocation([latitude, longitude]);
-          } catch (error: any) { // Explicitly type error
-            console.error(("Error getting user location:") + ' ' + error.message);
+            // Continuously monitor the user's position
+            navigator.geolocation.watchPosition(
+              (position) => {
+                const { latitude, longitude } = position.coords;
+                setUserLocation([latitude, longitude]);
+              },
+              (error) => {
+                console.error("Error getting user location:", error.message);
+                setUserLocation([51.5072, 0.1276]); // Use default coordinates if there is an error
+                setIsDefaultLocation(true);
+              },
+              { enableHighAccuracy: true }
+            );
+          } catch (error) {
+            console.error("Error:", error.message);
             setUserLocation([51.5072, 0.1276]); // Use default coordinates if there is an error
             setIsDefaultLocation(true);
           }
@@ -49,7 +53,7 @@ export default function DynamicMap({ mapData }) {
           setIsDefaultLocation(true);
         }
       } else {
-        console.error(("Geolocation is not supported by your browser"));
+        console.error("Geolocation is not supported by your browser");
         setUserLocation([51.5072, 0.1276]); // Use default coordinates if geolocation is not supported
         setIsDefaultLocation(true);
       }
@@ -81,7 +85,7 @@ export default function DynamicMap({ mapData }) {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {/* Rendering a marker for each datapoint in the mapData array */}
-          {mapData.filter((r,_i) => r.Open).map((dataPoint) => (
+          {mapData.filter((r, _i) => r.Open).map((dataPoint) => (
             <Marker position={[dataPoint.Lat, dataPoint.Lon]} icon={customIcon} key={dataPoint._id}>
               {/* Popup for each data point */}
               <Popup>
