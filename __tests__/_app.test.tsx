@@ -40,7 +40,7 @@ describe('MyApp', () => {
         />
       );
   
-      expect(screen.getByRole('banner')).toBeInTheDocument(); // Assuming Header renders a banner role
-      expect(screen.getByRole('dialog')).toBeInTheDocument(); // Assuming ConsentPopup renders a dialog role
+      expect(screen.getByRole('banner')).toBeInTheDocument(); 
+      expect(screen.getByRole('dialog')).toBeInTheDocument(); 
     });
   });
