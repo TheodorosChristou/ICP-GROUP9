@@ -95,7 +95,7 @@ export default function ObservationForm(props){
             </div>
 
             <div>
-            <label className="font-semibold"> {"Longitute"} </label>
+            <label className="font-semibold"> {"Longitude"} </label>
             <input
             {...register("Lon", FieldValidation(valid))}
             className="border-2 rounded-md p-2 ml-2 text-black w-full"

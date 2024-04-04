@@ -47,4 +47,3 @@ it('Should Show Log In when no session', () => {
       
     expect(screen.queryByText("Log In")).not.toBeInTheDocument();
     });
-      

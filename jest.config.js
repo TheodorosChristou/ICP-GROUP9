@@ -7,6 +7,8 @@ const createJestConfig = nextJest({
 })
 module.exports = {
   setupFiles: ['./jest.polyfills.js'],
+  testEnvironment: 'jsdom',
+
 }
 // Add any custom config to be passed to Jest
 const config = {
