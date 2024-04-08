@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import WeatherComponent, { WeatherResponse } from '../components/WeatherComponent'; // Adjust the import path as needed
 
 export default function weatherpage(){
+  // const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
+
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -26,4 +28,20 @@ export default function weatherpage(){
     
         fetchData();
       }, []);
-}
+      // Needed for testing
+      //return (
+        //<div>
+          //{weatherData && (
+            //<div>
+              //<p>Temperature: {weatherData.WeatherTemperature}</p>
+              //<p>Description: {weatherData.WeatherDescription}</p>
+          //     <p>Wind Speed: {weatherData.WindSpeed}</p>
+          //     <p>Wind Direction: {weatherData.WindDirection}</p>
+          //     <p>Atmospheric Pressure: {weatherData.AtmosphericPressure}</p>
+          //     <p>Humidity: {weatherData.Humidity}</p>
+          //     <p>Visibility: {weatherData.Visibility}</p>
+          //   </div>
+          // )}
+      //   </div>
+      // );
+    }
