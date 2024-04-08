@@ -48,16 +48,21 @@ export default function ObservationForm(props){
         role = session.user.role;
       }
 
+    role = "admin"
+
     const ResponseList = ['Staff', 'Vessels', 'Emergency Services', 'Public Vessels'];
-
-
-
 
  
   
     const {onSubmit, isLoading, triggerReset, values, label, watch} = props;
     const {register, control ,  handleSubmit, formState:{errors, dirtyFields, touchedFields, isDirty}, reset} = useForm<ObservationValues>({
-        defaultValues: {...values},
+      defaultValues: {
+        ...values,
+        Response: ResponseList.reduce((acc, option) => {
+          acc[option] = values?.Response?.includes(option) || false;
+          return acc;
+        }, {}),
+      },
       });
 
       useEffect(() => {
@@ -77,8 +82,14 @@ export default function ObservationForm(props){
         </div>
         <form
           onSubmit={handleSubmit((data) => {
-            // Extract selected options from the Response object
-            const selectedOptions = ResponseList.filter((option) => data.Response[option]);
+
+            var selectedOptions = ResponseList.filter((option) => data.Response?.[option]);
+            if(selectedOptions.length == 0){
+              selectedOptions = []
+            }else{
+              selectedOptions = selectedOptions
+            }
+            console.log(selectedOptions.length)
             onSubmit({ ...data, Response: selectedOptions });
           })}
         >
@@ -117,28 +128,27 @@ export default function ObservationForm(props){
             </div>
 
             {role === 'admin' && (
-            <div>
-              <label className="font-semibold">Response:</label>
-              {ResponseList.map((option) => (
-                <div key={option}>
-                  
-                  <Controller
-                    /* @ts-ignore */
-                    name={`Response.${option}`}
-                    control={control}
-                    defaultValue={false}
-                    render={({ field }) => (
-                      <label /* @ts-ignore */>
-                        <input type="checkbox" {...field} />
-                        {option}
-                      </label>
-                    )}
-                  />
-                </div>
-              ))}
-              <p>{errors.Response?.message}</p>
-            </div>
+  <div>
+    <label className="font-semibold">Response:</label>
+    {ResponseList.map((option) => (
+      <div key={option}>
+        <Controller
+        // @ts-ignore
+          name={`Response.${option}`}
+          control={control}
+          defaultValue={false}
+          render={({ field }) => (
+            <label /* @ts-ignore */>
+              <input type="checkbox" {...field} checked={field.value} />
+              {option}
+            </label>
           )}
+        />
+      </div>
+    ))}
+    <p>{errors.Response?.message}</p>
+  </div>
+)}
 
           {(role == "admin" && (
               <div>
@@ -152,7 +162,6 @@ export default function ObservationForm(props){
               <p>{errors.ResponseDescription?.message}</p>
               </div>
           ))}
-
 
             <div className=" flex justify-center">
                 <div className="flex justify-center mt-5 bg-black text-white rounded-full w-full">

@@ -14,7 +14,7 @@ export default function Uploading(Observations){
     
     const{data: session} = useSession();
 
-    const valid = session
+    var valid = session
     const observation = Observations
 
 
@@ -26,6 +26,7 @@ export default function Uploading(Observations){
       user = session.user.name;
       role = session.user.role;
     }
+
 
     const handleDelete = async (id) => {
 
@@ -184,7 +185,7 @@ export default function Uploading(Observations){
                     </td>)}
                     <td key={i+23}className="flex justify-center"><button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Update</button></td>
                     {role == "admin" && (<td key={i+24} className="flex justify-center"><button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Delete</button></td>)}
-                    {role == "admin" && (<td key={i+25} className="flex justify-center"><button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Close</button></td>)}
+                    {role == "admin" && r.Open && (<td key={i+25} className="flex justify-center"><button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Close</button></td>)}
                   </tr>
                 </tbody>
               </table>
@@ -192,7 +193,7 @@ export default function Uploading(Observations){
             ))}
         </div>)
       }else{
-        return <div className="flex items-center justify-center"><FadeInDiv><div className="container mx-auto my-8 p-8 bg-white shadow-md">
+        return <div className="flex items-center justify-center"><FadeInDiv><link rel="manifest" href="manifest.json" /><div className="container mx-auto my-8 p-8 bg-white shadow-md">
         <h1 className="text-2xl font-bold mb-4">Unauthorized!</h1>
         <p>This page cannot be accessed without logging in!.</p>
       </div></FadeInDiv></div>
