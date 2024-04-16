@@ -19,12 +19,24 @@
 }
 
 .global-bg {
-  background-image: url('/img/Ship2.PNG');/* Adjust the path based on your project structure */
-  background-size: cover;
-  background-position: center;
+  background-image: url('/img/waves3.jpg');/* Adjust the path based on your project structure */
   background-repeat: no-repeat;
   background-attachment: fixed; /* Keeps the background fixed when scrolling */
-  height: 100vh; /* Set the height of the container to 100% of the viewport height */
+  height: 20vh; /* Set the height of the container to 100% of the viewport height */
   width: 100%; /* Set the width of the container to 100% */
   overflow-x: hidden; /* Hide horizontal overflow if any content extends beyond the width */
+}
+
+.table-fixed {
+  table-layout: fixed;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.break-words {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
