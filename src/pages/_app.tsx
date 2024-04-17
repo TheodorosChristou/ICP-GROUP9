@@ -7,20 +7,23 @@ import { useEffect } from 'react';
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ConsentPopup from '../components/CookieConsent'
 import WeatherPage from '../pages/weatherpage'
+import { Workbox } from "workbox-window";
 
 const queryClient = new QueryClient();
 
 function MyApp({Component, pageProps: {session, ...pageProps}}) {
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(
-        function (registration) {
-          console.log('Service Worker registration successful with scope: ', registration.scope);
-        },
-        function (err) {
-          console.log('Service Worker registration failed: ', err);
-        }
-      );
+    if ("serviceWorker" in navigator) {
+      const wb = new Workbox("sw.js");
+      console.log(wb)
+      wb.addEventListener("waiting", (event) => {
+        wb.addEventListener("controlling", (event) => {
+          console.log("Reloading page for latest content");
+          window.location.reload();
+        });
+        wb.messageSW({ type: "SKIP_WAITING" });
+      });
+      wb.register();
     }
   }, []);
   
