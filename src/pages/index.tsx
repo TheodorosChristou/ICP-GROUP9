@@ -157,8 +157,8 @@ export default function Uploading(Observations) {
           </div>
         )}
 
-        <div className="overflow-y-auto shadow-md sm:rounded-lg">
-          <div className="pb-4 bg-white dark:bg-gray-900">
+        <div className="overflow-y-auto w-full shadow-md sm:rounded-lg">
+          <div className="pb-4 w-full bg-white dark:bg-gray-900">
             <label htmlFor="table-search" className="sr-only">Search</label>
             <div className="relative mt-1">
               <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -169,7 +169,7 @@ export default function Uploading(Observations) {
               <input type="text" id="table-search" className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items" />
             </div>
           </div>
-          <table className="table-fixed w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="table-justify-around w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
@@ -222,7 +222,7 @@ export default function Uploading(Observations) {
                       <img
                         src="/img/weather.ico"
                         alt="Weather icon"
-                        className="h-5 w-5 text-blue-500 hover:text-blue-600"
+                        className="h-5 w-5 text-blue-500 hover:text-blue-600 "
                       />
                       {weatherHoverIndex === i && (
                         <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-4rem]">

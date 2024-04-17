@@ -111,7 +111,7 @@ export default function Uploading(Observations) {
 
   if (valid) {
     return (
-      <div className="">
+      <div className="bg-white min-h-screen py-7">
 
         <h1 className="sm:p-3 bg-white rounded-lg w-[90%] md:max-w-sm mx-auto mt-7 font-bold text-xl flex justify-center mb-5">Archive</h1>
 
@@ -127,31 +127,31 @@ export default function Uploading(Observations) {
               <input type="text" id="table-search" className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items" />
             </div>
           </div>
-          <table className="table-fixed w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="table-justify-around w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-2 md:px-6 md:py-3">
                   Latitude
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-2 md:px-6 md:py-3">
                   Longitutde
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-2 md:px-6 md:py-3">
                   Injured
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Objervation
+                <th scope="col" className="px-3 py-2 md:px-6 md:py-3">
+                  Observation
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-2 md:px-6 md:py-3">
                   Weather Information
                 </th>
-                {role == "admin" && (<th scope="col" className="px-6 py-3">
+                {role == "admin" && (<th scope="col" className="px-3 py-2 md:px-6 md:py-3">
                   Response
                 </th>)}
-                {role == "admin" && (<th scope="col" className="px-6 py-3">
+                {role == "admin" && (<th scope="col" className="px-3 py-2 md:px-6 md:py-3">
                   Response Description
                 </th>)}
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-2 md:px-6 md:py-3">
                   Action
                 </th>
               </tr>
@@ -159,7 +159,7 @@ export default function Uploading(Observations) {
             <tbody>
               {observations?.map((r, i) => (
                 <tr className="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white  break-words">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white ">
                     {r.Lat}
                   </th>
                   <td className="px-6 py-4  break-words">
