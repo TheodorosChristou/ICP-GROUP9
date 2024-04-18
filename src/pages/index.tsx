@@ -125,12 +125,18 @@ export default function Uploading(Observations) {
   });
   if (!role) {
     return (
-      <div>
-        <div className="flex justify-between">
-          <div className=" ml-6 mt-20 text-gray-900 text-8xl font-bold font-serif drop-shadow-lg w-[50%]"><h3>Maritime Emergency Response </h3></div>
-          <div className=" mr-20 mt-24 mb-20 p-5 text-gray-900 text-3xl font-bold font-serif drop-shadow-lg md:h-[60%] md:w-[50%] flex justify-center bg-white rounded-lg"><h3>Maritime Emergency Response is a private coast guard service in the UK. We work with councils and local government to supply emergency services, search and rescue, and other services to those at sea in UK waters, you can help us save lives by submitting an incident as soon as you see it.  </h3></div>
-        </div>
-        <div className="text-white mt-5"><ObservationForm
+      <div className='container mx-auto px-4 md:px-8'>
+        <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="ml-6 mt-20 text-gray-900 text-4xl md:text-6xl lg:text-8xl font-bold font-serif drop-shadow-lg w-full md:w-1/2">
+        <h3>Maritime Emergency Response</h3>
+      </div>
+      <div className="mr-10 mt-10 ml-10 md:mt-24 md:ml-20 mb-20 p-4 text-gray-900 text-base md:text-xl font-bold font-serif drop-shadow-lg w-[80%] md:w-1/2 flex justify-center bg-lightblue rounded-lg">
+      <h3>
+        Maritime Emergency Response is a private coast guard service in the UK. We work with councils and local government to supply emergency services, search and rescue, and other services to those at sea in UK waters. You can help us save lives by submitting an incident as soon as you see it.
+      </h3>
+    </div>
+  </div>
+        <div className="text-white mx-auto mb-10 mt-15 ml-10 mr-10"><ObservationForm
           isLoading={isLoading}
           onSubmit={(observationform) => mutate(observationform)}
         />  </div>
@@ -140,12 +146,18 @@ export default function Uploading(Observations) {
 
     return (
 
-      <div className="">
-        <div className="flex justify-between">
-          <div className=" ml-6 mt-20 text-gray-900 text-8xl font-bold font-serif drop-shadow-lg w-[50%]"><h3>Maritime Emergency Response </h3></div>
-          <div className=" mr-20 mt-24 mb-20 p-5 text-gray-900 text-3xl font-bold font-serif drop-shadow-lg md:h-[60%] md:w-[50%] flex justify-center bg-white rounded-lg"><h3>Maritime Emergency Response is a private coast guard service in the UK. We work with councils and local government to supply emergency services, search and rescue, and other services to those at sea in UK waters, you can help us save lives by submitting an incident as soon as you see it.  </h3></div>
-        </div>
-        <div className="text-white mt-5"><ObservationForm
+  <div className="">
+  <div className="flex flex-col md:flex-row justify-between items-center">
+    <div className="ml-6 mt-20 text-gray-900 text-4xl md:text-6xl lg:text-8xl font-bold font-serif drop-shadow-lg w-full md:w-1/2">
+      <h3>Maritime Emergency Response</h3>
+    </div>
+    <div className="mr-10 mt-10 ml-10 md:mt-24 md:ml-20 mb-20 p-3 px-1 text-gray-900 text-base md:text-3xl font-bold font-serif drop-shadow-lg w-[80%] md:w-1/2 flex justify-center bg-lightblue rounded-lg">
+      <h3>
+        Maritime Emergency Response is a private coast guard service in the UK. We work with councils and local government to supply emergency services, search and rescue, and other services to those at sea in UK waters. You can help us save lives by submitting an incident as soon as you see it.
+      </h3>
+    </div>
+  </div>
+        <div className="text-white mt-5 ml-10 mr-10 "><ObservationForm
           isLoading={isLoading}
           onSubmit={(observationform) => mutate(observationform)}
         />  </div>
@@ -153,12 +165,12 @@ export default function Uploading(Observations) {
         <div className=" rounded-lg text-black mt-1 font-bold text-xl flex justify-center">{confirmation && (<h1>Submittion Sent!</h1>)}</div>
         {(role == "user" || role=="admin") && (
           <div className="flex justify-center mt-5">
-            <h1 className="sm:p-3 bg-white border-2 border-black rounded-lg mt-1 font-bold text-xl flex justify-center mb-5">On-Going Incidents</h1>
+            <h1 className="sm:p-4 bg-lightblue mt-10 underline border-2 border-none rounded-lg mt-1 font-bold text-3xl flex justify-center mb-5">On-Going Incidents</h1>
           </div>
         )}
 
         <div className="overflow-y-auto w-full shadow-md sm:rounded-lg">
-          <div className="pb-4 w-full bg-white dark:bg-gray-900">
+          <div className="pb-0 w-full dark:bg-gray-900">
             <label htmlFor="table-search" className="sr-only">Search</label>
             <div className="relative mt-1">
               <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -255,8 +267,8 @@ export default function Uploading(Observations) {
               </td>)}
               <td className="px-6 py-4">
                 <button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Update</button>
-                {role == "admin" && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Delete</button>)}
-                {role == "admin" && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold">Close</button>)}
+                {role == "admin" && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Delete</button>)}
+                {role == "admin" && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Close</button>)}
               </td>
             </tr>
               ))}

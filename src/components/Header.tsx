@@ -12,11 +12,17 @@ export default function Header() {
     user = session.user.name;
     role = session.user.role;
   }
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const handleMenuClick = () => {
+    setMenuOpen(false); 
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 z-40 bg-white">
       <nav data-testid="navbar" className="p-2 items-center w-full flex justify-between">
@@ -50,21 +56,29 @@ export default function Header() {
               {menuOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
             </button>
           </div>
-          {/* Navigation links */}
           <div className={`lg:flex gap-2 ${menuOpen ? 'flex flex-col bg-white absolute w-full top-12 left-0' : 'hidden'}`}>
-            <Link href="/">
-              <div className="text-xl hover:bg-gray-300 py-2 px-4 rounded cursor-pointer">
+            <Link href="/" passHref>
+              <div
+                className="text-xl lg:mt-2 hover:bg-gray-300 py-2 px-4 rounded cursor-pointer"
+                onClick={handleMenuClick}
+              >
                 Home
               </div>
             </Link>
-            <Link href="/map">
-              <div className="text-xl hover:bg-gray-300 py-2 px-4 rounded cursor-pointer">
+            <Link href="/map" passHref>
+              <div
+                className="text-xl lg:mt-2 hover:bg-gray-300 py-2 px-4 rounded cursor-pointer"
+                onClick={handleMenuClick}
+              >
                 Map
               </div>
             </Link>
-            {session && role == 'admin' && (
-              <Link href="/archive">
-                <div className="text-xl hover:bg-gray-300 py-2 px-4 rounded cursor-pointer">
+            {session && role === 'admin' && (
+              <Link href="/archive" passHref>
+                <div
+                  className="text-xl lg:mt-2 hover:bg-gray-300 py-2 px-4 rounded cursor-pointer"
+                  onClick={handleMenuClick}
+                >
                   Archive
                 </div>
               </Link>
