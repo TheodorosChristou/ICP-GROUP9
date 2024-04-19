@@ -9,7 +9,7 @@ import { GetServerSideProps } from 'next';
 import dbConnect from '../../lib/dbConnect';
 import WeatherComponent, { WeatherResponse } from '../components/WeatherComponent';
 import { Card, Typography } from "@material-tailwind/react";
-
+import Fuse from 'fuse.js';
 
 export default function Uploading(Observations) {
 
@@ -22,6 +22,33 @@ export default function Uploading(Observations) {
 
   const [observations, setobservationsState] = useState(observation.Observations);
 
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredObservations, setFilteredObservations] = useState(observations.Observations);
+
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  useEffect(() => {
+    console.log("Search term changed:", searchTerm);
+    const filtered = observations.filter(observation => {
+
+      const observationMatch = observation.Observation.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const latMatch = observation.Lat.toString().includes(searchTerm);
+      const lonMatch = observation.Lon.toString().includes(searchTerm);
+      const temperatureMatch = observation.WeatherTemperature.toString().includes(searchTerm);
+
+      return observationMatch || latMatch || lonMatch || temperatureMatch;
+    });
+
+
+    console.log("Filtered observations:", filtered);
+    setFilteredObservations(filtered);
+  }, [searchTerm, Observations]);
+
   if (session?.user?.name?.toString()) {
     user = session.user.name;
     role = session.user.role;
@@ -32,6 +59,7 @@ export default function Uploading(Observations) {
 
     await axios.delete(`/api/changes/${id}`);
     setobservationsState(observations.filter((r, _i) => r._id !== id))
+    setFilteredObservations(observations.filter((r, _i) => r._id !== id))
 
   }
 
@@ -53,7 +81,7 @@ export default function Uploading(Observations) {
 
     await axios.put(`/api/changes/${id}`, Update);
     setobservationsState(observations.filter((r, _i) => r._id !== id))
-
+    setFilteredObservations(observations.filter((r, _i) => r._id !== id))
   }
 
 
@@ -72,6 +100,7 @@ export default function Uploading(Observations) {
   const [windHoverIndex, setWindHoverIndex] = useState(null);
   const [pressureHoverIndex, setPressureHoverIndex] = useState(null);
   const [humitidyHoverIndex, setHumitidyHoverIndex] = useState(null);
+
 
 
   const { isLoading, isSuccess, isError, mutate } = useMutation(async (observationform: ObservationValues) => {
@@ -121,13 +150,18 @@ export default function Uploading(Observations) {
       const response = await axios.post("/api/upload/", observationform)
       const data = response.data;
       const newTicket = data.data
-      console.log("TICKET DATA",newTicket)
+      console.log("TICKET DATA", newTicket)
       console.log("Response from server:", response.data);
       setobservationsState(prevState => {
         const newState = [...prevState, newTicket];
         console.log("Updated state:", newState);
         return newState;
-      });      setConfirmation(true)
+      }); setConfirmation(true)
+      setFilteredObservations(prevState => {
+        const newState = [...prevState, newTicket];
+        console.log("Updated state:", newState);
+        return newState;
+      }); setConfirmation(true)
       setValidation(true)
         ;
     }
@@ -137,15 +171,15 @@ export default function Uploading(Observations) {
     return (
       <div className='container mx-auto px-4 md:px-8'>
         <div className="flex flex-col md:flex-row justify-between items-center">
-        <div className="ml-6 mt-20 text-gray-900 text-4xl md:text-6xl lg:text-8xl font-bold font-serif drop-shadow-lg w-full md:w-1/2">
-        <h3>Maritime Emergency Response</h3>
-      </div>
-      <div className="mr-10 mt-10 ml-10 md:mt-24 md:ml-20 mb-20 p-4 text-gray-900 text-base md:text-xl font-bold font-serif drop-shadow-lg w-[80%] md:w-1/2 flex justify-center bg-lightblue rounded-lg">
-      <h3>
-        Maritime Emergency Response is a private coast guard service in the UK. We work with councils and local government to supply emergency services, search and rescue, and other services to those at sea in UK waters. You can help us save lives by submitting an incident as soon as you see it.
-      </h3>
-    </div>
-  </div>
+          <div className="ml-6 mt-20 text-gray-900 text-4xl md:text-6xl lg:text-8xl font-bold font-serif drop-shadow-lg w-full md:w-1/2">
+            <h3>Maritime Emergency Response</h3>
+          </div>
+          <div className="mr-10 mt-10 ml-10 md:mt-24 md:ml-20 mb-20 p-4 text-gray-900 text-base md:text-xl font-bold font-serif drop-shadow-lg w-[80%] md:w-1/2 flex justify-center bg-lightblue rounded-lg">
+            <h3>
+              Maritime Emergency Response is a private coast guard service in the UK. We work with councils and local government to supply emergency services, search and rescue, and other services to those at sea in UK waters. You can help us save lives by submitting an incident as soon as you see it.
+            </h3>
+          </div>
+        </div>
         <div className="text-white mx-auto mb-10 mt-15 ml-10 mr-10"><ObservationForm
           isLoading={isLoading}
           onSubmit={(observationform) => mutate(observationform)}
@@ -156,43 +190,42 @@ export default function Uploading(Observations) {
 
     return (
 
-  <div className="">
-  <div className="flex flex-col md:flex-row justify-between items-center">
-    <div className="ml-6 mt-20 text-gray-900 text-4xl md:text-6xl lg:text-8xl font-bold font-serif drop-shadow-lg w-full md:w-1/2">
-      <h3>Maritime Emergency Response</h3>
-    </div>
-    <div className="mr-10 mt-10 ml-10 md:mt-24 md:ml-20 mb-20 p-3 px-1 text-gray-900 text-base md:text-3xl font-bold font-serif drop-shadow-lg w-[80%] md:w-1/2 flex justify-center bg-lightblue rounded-lg">
-      <h3>
-        Maritime Emergency Response is a private coast guard service in the UK. We work with councils and local government to supply emergency services, search and rescue, and other services to those at sea in UK waters. You can help us save lives by submitting an incident as soon as you see it.
-      </h3>
-    </div>
-  </div>
+      <div className="">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="ml-6 mt-20 text-gray-900 text-4xl md:text-6xl lg:text-8xl font-bold font-serif drop-shadow-lg w-full md:w-1/2">
+            <h3>Maritime Emergency Response</h3>
+          </div>
+          <div className="mr-10 mt-10 ml-10 md:mt-24 md:ml-20 mb-20 p-3 px-1 text-gray-900 text-base md:text-3xl font-bold font-serif drop-shadow-lg w-[80%] md:w-1/2 flex justify-center bg-lightblue rounded-lg">
+            <h3>
+              Maritime Emergency Response is a private coast guard service in the UK. We work with councils and local government to supply emergency services, search and rescue, and other services to those at sea in UK waters. You can help us save lives by submitting an incident as soon as you see it.
+            </h3>
+          </div>
+        </div>
         <div className="text-white mt-5 ml-10 mr-10 "><ObservationForm
           isLoading={isLoading}
           onSubmit={(observationform) => mutate(observationform)}
         />  </div>
         <div className=" rounded-lg text-black font-bold text-xl flex justify-center">{!validation && (<h1>Couldnt Upload, check the fields for string characters</h1>)}</div>
         <div className=" rounded-lg text-black mt-1 font-bold text-xl flex justify-center">{confirmation && (<h1>Submittion Sent!</h1>)}</div>
-        {(role == "user" || role=="admin") && (
+        {(role == "user" || role == "admin") && (
           <div className="flex justify-center mt-5">
             <h1 className="sm:p-4 bg-lightblue mt-10 underline border-2 border-none rounded-lg mt-1 font-bold text-3xl flex justify-center mb-5">On-Going Incidents</h1>
           </div>
         )}
 
-        <div className="overflow-y-auto w-full shadow-md sm:rounded-lg">
-          <div className="pb-0 w-full dark:bg-gray-900">
-            <label htmlFor="table-search" className="sr-only">Search</label>
-            <div className="relative mt-1">
-              <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                </svg>
-              </div>
-              <input type="text" id="table-search" className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items" />
-            </div>
+
+        <div className="overflow-y-auto shadow-md sm:rounded-lg">
+          <div className="bg-gray-200">
+            <input className="rounded-md p-2 bg-gray-200 hover:bg-white text-gray-900"
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder="Search for tickets..."
+            />
           </div>
-          <table className="table-justify-around w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
+          <table className="table-fixed w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+
               <tr>
                 <th scope="col" className="px-6 py-3">
                   Latitude
@@ -218,18 +251,18 @@ export default function Uploading(Observations) {
               </tr>
             </thead>
             <tbody>
-            {observations?.filter((r,_i) => r.Open).map((r,i) => (
-              <tr className="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white  break-words">
-                {r.Lat}
-              </th>
-              <td className="px-6 py-4  break-words">
-              {r.Lon}
-              </td>
-              <td className="px-6 py-4  break-words">
-              {r.Observation}
-              </td>
-              <td className="px-6 py-4 flex items-center mt-4">
+              {filteredObservations?.filter((r, _i) => r.Open).map((r, i) => (
+                <tr className="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white  break-words">
+                    {r.Lat}
+                  </th>
+                  <td className="px-6 py-4  break-words">
+                    {r.Lon}
+                  </td>
+                  <td className="px-6 py-4  break-words">
+                    {r.Observation}
+                  </td>
+                  <td className="px-6 py-4 flex items-center mt-4">
                     <div
                       className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setWeatherHoverIndex(i)}
@@ -298,20 +331,20 @@ export default function Uploading(Observations) {
                       )}
                     </div>
                   </td>
-              {role == "admin" && (<td className="px-6 py-4  break-words">
-              {r.Response.length != 0 &&(<div  className="">{r.Response?.map((r,i) => (<p key={i + 27}>{r}</p>))}</div>)}
-              </td>)}
-              {role == "admin" && (<td className="px-6 py-4  break-words">
-              {r.ResponseDescription}
-              </td>)}
-              <td className="px-6 py-4">
-                <button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Update</button>
-                {role == "admin" && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Delete</button>)}
-                {role == "admin" && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Close</button>)}
-                {role == "admin" && (<button onClick={() => redirect(`/map/${r.Lat}/${r.Lon}/map`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Map</button>)}
+                  {role == "admin" && (<td className="px-6 py-4  break-words">
+                    {r.Response.length != 0 && (<div className="">{r.Response?.map((r, i) => (<p key={i + 27}>{r}</p>))}</div>)}
+                  </td>)}
+                  {role == "admin" && (<td className="px-6 py-4  break-words">
+                    {r.ResponseDescription}
+                  </td>)}
+                  <td className="px-9 py-4">
+                    <button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Update</button>
+                    {role == "admin" && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Delete</button>)}
+                    {role == "admin" && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Close</button>)}
+                    {role == "admin" && (<button onClick={() => redirect(`/map/${r.Lat}/${r.Lon}/map`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Map</button>)}
 
-              </td>
-            </tr>
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
