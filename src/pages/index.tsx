@@ -70,6 +70,8 @@ export default function Uploading(Observations) {
 
   const [weatherHoverIndex, setWeatherHoverIndex] = useState(null);
   const [windHoverIndex, setWindHoverIndex] = useState(null);
+  const [pressureHoverIndex, setPressureHoverIndex] = useState(null);
+  const [humitidyHoverIndex, setHumitidyHoverIndex] = useState(null);
 
 
   const { isLoading, isSuccess, isError, mutate } = useMutation(async (observationform: ObservationValues) => {
@@ -116,8 +118,16 @@ export default function Uploading(Observations) {
 
       console.log("creating new observation")
       console.log(observationform)
-      await axios.post("/api/upload/", observationform)
-      setConfirmation(true)
+      const response = await axios.post("/api/upload/", observationform)
+      const data = response.data;
+      const newTicket = data.data
+      console.log("TICKET DATA",newTicket)
+      console.log("Response from server:", response.data);
+      setobservationsState(prevState => {
+        const newState = [...prevState, newTicket];
+        console.log("Updated state:", newState);
+        return newState;
+      });      setConfirmation(true)
       setValidation(true)
         ;
     }
@@ -161,7 +171,7 @@ export default function Uploading(Observations) {
           isLoading={isLoading}
           onSubmit={(observationform) => mutate(observationform)}
         />  </div>
-        <div className=" rounded-lg text-black font-bold text-xl flex justify-center">{!validation && (<h1>Couldnt Upload, please check the fields</h1>)}</div>
+        <div className=" rounded-lg text-black font-bold text-xl flex justify-center">{!validation && (<h1>Couldnt Upload, check the fields for string characters</h1>)}</div>
         <div className=" rounded-lg text-black mt-1 font-bold text-xl flex justify-center">{confirmation && (<h1>Submittion Sent!</h1>)}</div>
         {(role == "user" || role=="admin") && (
           <div className="flex justify-center mt-5">
@@ -181,7 +191,7 @@ export default function Uploading(Observations) {
               <input type="text" id="table-search" className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items" />
             </div>
           </div>
-          <table className="table-justify-around w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="table-justify-around w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
@@ -189,9 +199,6 @@ export default function Uploading(Observations) {
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Longitutde
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Injured
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Observation
@@ -220,12 +227,9 @@ export default function Uploading(Observations) {
               {r.Lon}
               </td>
               <td className="px-6 py-4  break-words">
-                2
-              </td>
-              <td className="px-6 py-4  break-words">
               {r.Observation}
               </td>
-              <td className="px-6 py-4 flex items-center">
+              <td className="px-6 py-4 flex items-center mt-4">
                     <div
                       className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setWeatherHoverIndex(i)}
@@ -237,8 +241,9 @@ export default function Uploading(Observations) {
                         className="h-5 w-5 text-blue-500 hover:text-blue-600 "
                       />
                       {weatherHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-4rem]">
-                          <p>{r.WeatherDescription}</p>
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-8rem]">
+                          <p>Temperature: {r.WeatherTemperature}°</p>
+                          <p>Description: {r.WeatherDescription}</p>
                         </div>
                       )}
                     </div>
@@ -253,8 +258,42 @@ export default function Uploading(Observations) {
                         className="h-5 w-5 text-green-500 hover:text-green-600"
                       />
                       {windHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-3rem]">
-                          <p>{r.WindDirection}</p>
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem]">
+                          <p>Speed: {r.WindSpeed}</p>
+                          <p>Direction: {r.WindDirection}</p>
+                        </div>
+                      )}
+                    </div>
+                    <div
+                      className="relative inline-block cursor-pointer ml-4"
+                      onMouseEnter={() => setPressureHoverIndex(i)}
+                      onMouseLeave={() => setPressureHoverIndex(null)}
+                    >
+                      <img
+                        src="/img/pressure.ico"
+                        alt="Pressure icon"
+                        className="h-5 w-5 text-green-500 hover:text-green-600"
+                      />
+                      {pressureHoverIndex === i && (
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-4rem]">
+                          <p>Pressure: {r.AtmosphericPressure}</p>
+                        </div>
+                      )}
+                    </div>
+                    <div
+                      className="relative inline-block cursor-pointer ml-4"
+                      onMouseEnter={() => setHumitidyHoverIndex(i)}
+                      onMouseLeave={() => setHumitidyHoverIndex(null)}
+                    >
+                      <img
+                        src="/img/humitidy.ico"
+                        alt="Humitidy icon"
+                        className="h-5 w-5 text-green-500 hover:text-green-600"
+                      />
+                      {humitidyHoverIndex === i && (
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem]">
+                          <p>Humidity: {r.Humidity}</p>
+                          <p>Visibility: {r.Visibility}</p>
                         </div>
                       )}
                     </div>
@@ -269,6 +308,8 @@ export default function Uploading(Observations) {
                 <button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Update</button>
                 {role == "admin" && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Delete</button>)}
                 {role == "admin" && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Close</button>)}
+                {role == "admin" && (<button onClick={() => redirect(`/map/${r.Lat}/${r.Lon}/map`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Map</button>)}
+
               </td>
             </tr>
               ))}
