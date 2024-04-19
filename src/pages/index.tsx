@@ -39,9 +39,9 @@ export default function Uploading(Observations) {
 
       const latMatch = observation.Lat.toString().includes(searchTerm);
       const lonMatch = observation.Lon.toString().includes(searchTerm);
-      const temperatureMatch = observation.WeatherTemperature.toString().includes(searchTerm);
+      const ticketMatch = observation._id.toLowerCase().includes(searchTerm.toLowerCase());
 
-      return observationMatch || latMatch || lonMatch || temperatureMatch;
+      return observationMatch || latMatch || lonMatch || ticketMatch;
     });
 
 
@@ -150,8 +150,7 @@ export default function Uploading(Observations) {
       const response = await axios.post("/api/upload/", observationform)
       const data = response.data;
       const newTicket = data.data
-      console.log("TICKET DATA", newTicket)
-      console.log("Response from server:", response.data);
+
       setobservationsState(prevState => {
         const newState = [...prevState, newTicket];
         console.log("Updated state:", newState);
@@ -227,6 +226,9 @@ export default function Uploading(Observations) {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 
               <tr>
+              <th scope="col" className="px-6 py-3">
+                  Ticket Number
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Latitude
                 </th>
@@ -254,8 +256,11 @@ export default function Uploading(Observations) {
               {filteredObservations?.filter((r, _i) => r.Open).map((r, i) => (
                 <tr className="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white  break-words">
-                    {r.Lat}
+                    {r._id.slice(-5).toUpperCase()}
                   </th>
+                  <td className="px-6 py-4  break-words">
+                    {r.Lat}
+                  </td>
                   <td className="px-6 py-4  break-words">
                     {r.Lon}
                   </td>
