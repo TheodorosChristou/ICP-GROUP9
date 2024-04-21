@@ -171,20 +171,20 @@ export default function Uploading(Observations) {
       <div className='container mx-auto px-4 md:px-8'>
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="ml-6 mt-20 text-gray-900 text-4xl md:text-6xl lg:text-8xl font-bold font-serif drop-shadow-lg w-full md:w-1/2">
-            <h3>Maritime Emergency Response</h3>
+            <h3 data-test="title-item" >Maritime Emergency Response</h3>
           </div>
           <div className="mr-10 mt-10 ml-10 md:mt-24 md:ml-20 mb-20 p-4 text-gray-900 text-base md:text-xl font-bold font-serif drop-shadow-lg w-[80%] md:w-1/2 flex justify-center bg-lightblue rounded-lg">
-            <h3>
+            <h3 data-test="subheadding-item">
               Maritime Emergency Response is a private coast guard service in the UK. We work with councils and local government to supply emergency services, search and rescue, and other services to those at sea in UK waters. You can help us save lives by submitting an incident as soon as you see it.
             </h3>
           </div>
         </div>
-        <div className="text-white mx-auto mb-10 mt-15 ml-10 mr-10"><ObservationForm
+        <div className="text-white mx-auto mb-10 mt-15 ml-10 mr-10" data-test="form-item"><ObservationForm
           isLoading={isLoading}
           onSubmit={(observationform) => mutate(observationform)}
         />  </div>
-        <div className=" rounded-lg text-black font-bold text-xl flex justify-center">{!validation && (<h1>Couldnt Upload, please check the fields</h1>)}</div>
-        <div className=" rounded-lg text-black mt-1 font-bold text-xl flex justify-center">{confirmation && (<h1>Submittion Sent!</h1>)}</div></div>)
+        <div className=" rounded-lg text-black font-bold text-xl flex justify-center">{!validation && (<h1 data-test="invalidsubmission-conformation">Couldnt Upload, please check the fields</h1>)}</div>
+        <div className=" rounded-lg text-black mt-1 font-bold text-xl flex justify-center">{confirmation && (<h1 data-test="submission-conformation" >Submission Sent!</h1>)}</div></div>)
   } else {
 
     return (
