@@ -28,7 +28,7 @@ export default function Header() {
       <nav data-testid="navbar" className="p-2 items-center w-full flex justify-between">
         <div className="text-black h-12 w-full gap-0 sm:gap-3 flex items-center justify-between">
           <div className="flex align-center">
-            <div className="flex space-x-2">
+            <div className="flex space-x-2" data-test="home-ref">
               <Link href="/">
                 <Image
                   alt="Maritime Logo"
@@ -73,8 +73,8 @@ export default function Header() {
                 Map
               </div>
             </Link>
-            {session && role === 'admin' && (
-              <Link href="/archive" passHref>
+            {session && role === 'admin' || process.env.NEXT_PUBLIC_TESTING && (
+              <Link data-test="archive-ref" href="/archive" passHref>
                 <div
                   className="text-xl lg:mt-2 hover:bg-gray-300 py-2 px-4 rounded cursor-pointer"
                   onClick={handleMenuClick}
