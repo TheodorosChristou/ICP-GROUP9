@@ -73,11 +73,11 @@ export default function DynamicMap({ mapData}) {
           ))}
           {/* Rendering a marker for the user with the new user icon only when permission is granted and not at the hardcoded coordinates */}
           {userLocation && (
-            <Marker position={userLocation} icon={newUserIcon}>
+            <Marker data-test="person-position" position={userLocation} icon={newUserIcon}>
               {/* Popup for enabling location access */}
               <Popup>
                 <div>
-                  <h3>
+                  <h3 data-test="pos-txt">
                     Latitude: {userLocation[0].toFixed(6)}, Longitude: {userLocation[1].toFixed(6)}
                   </h3>
                 </div>
