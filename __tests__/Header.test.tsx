@@ -1,49 +1,71 @@
-import React from 'react'
-import {render, screen, fireEvent} from '@testing-library/react'
 import Header from '@/components/Header'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
-jest.mock("next-auth/react", () => {
-    const originalModule = jest.requireActual('next-auth/react');
-    const mockSession = {
-      expires: new Date(Date.now() + 2 * 86400).toISOString(),
-      user: { username: "admin" }
-    };
-    return {
-      __esModule: true,
-      ...originalModule,
-      useSession: jest.fn(() => {
-        return {data: mockSession, status: 'authenticated'}  // return type is [] in v3 but changed to {} in v4
-      }),
-    };
+// Mock the useSession hook
+jest.mock('next-auth/react', () => ({
+  ...jest.requireActual('next-auth/react'),
+  useSession: jest.fn(),
+}));
+
+describe('Header Component', () => {
+  beforeEach(() => {
+    // Mock the useSession hook behavior
+    (useSession as jest.Mock).mockImplementation(() => ({
+      data: null,
+      status: 'loading', // or 'authenticated', 'unauthenticated' depending on your test scenario
+      error: null,
+    }));
   });
 
-  it('Should have a nav bar', () => {
+  test('renders logo and title', () => {
     render(<Header />);
-    const navBar = screen.getByTestId('navbar');
-    expect(navBar).toHaveClass('p-2')
-    expect(screen.getByText('Home')).toBeInTheDocument();
-    expect(screen.getByText('Map')).toBeInTheDocument();
-})
-it('Should have an image', () => {
+    expect(screen.getByAltText('Maritime Logo')).toBeInTheDocument();
+    expect(screen.getByText('Maritime')).toBeInTheDocument();
+    expect(screen.getByText('Emergency')).toBeInTheDocument();
+  });
+
+  test('displays login button when user is not authenticated', () => {
     render(<Header />);
-    const image = screen.getByAltText('image');
-    expect(image).toBeInTheDocument()
-})
+    expect(screen.getByText('Log In')).toBeInTheDocument();
+  });
 
-it('Should Show Log Out when has session',
-    async () => {
-    const {container} = render(<Header/>);
-  
-    expect(container).toMatchSnapshot()
-    expect(screen.getByText("Log Out")).toBeInTheDocument();
-    });
-
-it('Should Show Log In when no session', () => {
-    jest.mock("next-auth/react", () => ({
-    useSession: () => ({ data: null })
+  test('displays logout button when user is authenticated', () => {
+    // Mock the useSession hook to return authenticated status
+    (useSession as jest.Mock).mockImplementation(() => ({
+      data: { user: { name: 'TestUser' } },
+      status: 'authenticated',
+      error: null,
     }));
-      
-    render(<Header/>);
-      
-    expect(screen.queryByText("Log In")).not.toBeInTheDocument();
+    render(<Header />);
+    expect(screen.getByText('Log Out')).toBeInTheDocument();
+  });
+
+  test('displays user name when user is authenticated', () => {
+    // Mocking the useSession hook to return authenticated status with user data
+    (useSession as jest.Mock).mockImplementation(() => ({
+      data: { user: { name: 'TestUser' } },
+      status: 'authenticated',
+      error: null,
+    }));
+    render(<Header />);
+    expect(screen.getByText('Welcome TestUser')).toBeInTheDocument();
+  });
+
+  test('displays menu when menu icon is clicked', async () => {
+      render(<Header />);
+      // Menu should not be visible initially
+      expect(screen.queryByText('Home')).not.toBeInTheDocument();
+      // Click on menu icon
+      fireEvent.click(screen.getByRole('button', { name: /menu/i }));
+      // Menu should be visible after clicking
+      expect(screen.getByText('Home')).toBeInTheDocument();
+      // Click again to close the menu
+      fireEvent.click(screen.getByRole('button', { name: /menu/i }));
+      // Menu should be hidden again
+      await waitFor(() => {
+        expect(screen.queryByText('Home')).not.toBeInTheDocument();
+      });
     });
+
+});

@@ -105,7 +105,7 @@ export default function ObservationForm(props) {
                 {...register("Lon", FieldValidation(valid))}
                 className="border-2 rounded-md p-3 ml-2 text-black w-full"
                 type="float"
-                placeholder={"Longitute"}
+                placeholder={"Longitude"}
               />
               <p>{errors.Lon?.message}</p>
             </div>

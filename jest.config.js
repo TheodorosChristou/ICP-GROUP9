@@ -15,7 +15,7 @@ const config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
   // Add more setup options before each test is run
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts', '<rootDir>/setupTests.js'],
   testEnvironment: 'jest-environment-jsdom',
   preset: 'ts-jest'
 }

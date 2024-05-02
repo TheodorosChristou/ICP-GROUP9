@@ -1,24 +1,48 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { SessionProvider } from 'next-auth/react'; // Import SessionProvider
-import ObservationForm from '@/components/ObservationForm';
+import Reacts from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import ObservationForm, {ObservationValues} from '@/components/ObservationForm';
 
-describe('ObservationForm', () => {
-    const mockOnSubmit = jest.fn();
-    
-    const renderForm = (props = {}) => {
-        render(
-            <SessionProvider session={{ user: { id: '1', name: 'Test User', role: 'admin' }, expires: '2024-04-05T12:00:00' }}>
-                <ObservationForm onSubmit={mockOnSubmit} {...props} />
-            </SessionProvider>
-        );
-    };
-    test('renders ObservationForm with default values', () => {
-      renderForm();
-      expect(screen.getByText('Latitude')).toBeInTheDocument();
-      expect(screen.getByText('Longitude')).toBeInTheDocument(); // Corrected spelling here
-      expect(screen.getByText('Observation')).toBeInTheDocument();
-      expect(screen.getByText('Submit')).toBeInTheDocument();
-  });
+jest.mock('next-auth/react', () => ({
+    useSession: () => ({
+      data: {
+        user: {
+          name: 'Test User',
+          role: 'admin',
+        },
+      },
+    }),
+  }));
   
-});
+  describe('ObservationForm Component', () => {
+    it('renders the form fields correctly', () => {
+      render(<ObservationForm onSubmit={() => {}} />);
+  
+      // Assert that the form fields are rendered
+      expect(screen.getByPlaceholderText('Latitude')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('Longitude')).toBeInTheDocument();
+      expect(screen.getByLabelText('Observation')).toBeInTheDocument();
+    });
+  
+    it('calls onSubmit with form data when submitted', () => {
+      // Mock the onSubmit function
+      const onSubmit = jest.fn();
+  
+      render(<ObservationForm onSubmit={onSubmit} />);
+  
+      // Simulate user input
+      fireEvent.change(screen.getByPlaceholderText('Latitude'), { target: { value: '40.7128' } });
+      fireEvent.change(screen.getByPlaceholderText('Longitude'), { target: { value: '-74.0060' } });
+      fireEvent.change(screen.getByLabelText('Observation'), { target: { value: 'Test observation' } });
+  
+      // Submit the form
+      fireEvent.click(screen.getByTestId('submitButton'));
+  
+      // Assert that onSubmit is called with the correct form data
+      expect(onSubmit).toHaveBeenCalledWith({
+        Lat: '40.7128',
+        Lon: '-74.0060',
+        Observation: 'Test observation',
+        Response: [],
+      });
+    });
+  });
