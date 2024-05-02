@@ -96,8 +96,9 @@ export default function ObservationForm(props) {
                 className="border-2 rounded-md p-3 ml-2 text-black w-full"
                 type="float"
                 placeholder={"Latitude"}
+                data-test="lat-input"
               />
-              <p>{errors.Lat?.message}</p>
+              <p data-test="lat-invalid">{errors.Lat?.message}</p>
             </div>
 
             <div className="mb-3 sm:w-1/2 sm:ml-2"> {/* Responsive width and margin */}
@@ -106,15 +107,16 @@ export default function ObservationForm(props) {
                 className="border-2 rounded-md p-3 ml-2 text-black w-full"
                 type="float"
                 placeholder={"Longitute"}
+                data-test="lon-input"
               />
-              <p>{errors.Lon?.message}</p>
+              <p data-test="lon-invalid">{errors.Lon?.message}</p>
             </div>
         
             </div>
             <div className="ml">
             <label className="font-semibold ml-2"> {"Observation"} </label>
             <div>
-            <textarea className="border-2 rounded-md p-2 ml-2 text-black w-full resize-none" id="Observation"{...register("Observation")} />
+            <textarea data-test="observation-text" className="border-2 rounded-md p-2 ml-2 text-black w-full resize-none" id="Observation"{...register("Observation")} />
           <p>{errors.Observation?.message}</p>
           </div>
           
@@ -145,7 +147,7 @@ export default function ObservationForm(props) {
               <div className="ml">
             <label className="font-semibold"> {"Response Description"} </label>
             <div>
-            <textarea className="border-2 rounded-md p-2 text-black w-full resize-none" id="ResponseDescription"{...register("ResponseDescription")} />
+            <textarea data-test="observation-text" className="border-2 rounded-md p-2 text-black w-full resize-none" id="ResponseDescription"{...register("ResponseDescription")} />
           <p>{errors.ResponseDescription?.message}</p>
           </div>
               </div>
@@ -156,6 +158,7 @@ export default function ObservationForm(props) {
               <div className="flex justify-center">
               <button
               data-testid="submitButton"
+              data-test="submitButton"
               className="bg-blue text-white text-sm sm:text-base rounded-full py-2 sm:py-3 px-3 sm:px-4 font-semibold"
                   >
                  Submit Incident

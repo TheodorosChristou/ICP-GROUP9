@@ -4,7 +4,7 @@ import Observation from '../../models/Observation';
 import axios from "axios";
 import { useMutation } from "react-query";
 import FadeInDiv from '../components/FadeInDiv';
-import { useSession } from "next-auth/react"
+import  useSession  from "../pages/api/auth/useNextAuth"
 import { GetServerSideProps } from 'next';
 import dbConnect from '../../lib/dbConnect';
 import Fuse from 'fuse.js';
@@ -30,7 +30,7 @@ export default function Uploading(Observations) {
   const [observations, setobservationsState] = useState(observation.Observations);
 
 
-  if (role == "admin") (
+  if (role == "admin" || process.env.NEXT_PUBLIC_TESTING) (
     valid = true
   )
 
@@ -143,11 +143,11 @@ export default function Uploading(Observations) {
 
   });
 
-  if (valid) {
+  if (valid ) {
     return (
       <div className="bg-white min-h-screen py-7">
 
-        <h1 className="sm:p-3 bg-white rounded-lg w-[90%] md:max-w-sm mx-auto mt-1 font-bold text-2xl flex justify-center mb-5">Archives</h1>
+        <h1 data-test="archive-title" className="sm:p-3 bg-white rounded-lg w-[90%] md:max-w-sm mx-auto mt-1 font-bold text-2xl flex justify-center mb-5">Archives</h1>
 
         <div className="overflow-y-auto shadow-md sm:rounded-lg">
           <div className="bg-gray-200">
@@ -162,28 +162,28 @@ export default function Uploading(Observations) {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 
               <tr>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3" data-test="ticket-hedding">
                   Ticket Number
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3" data-test="lat-hedding">
                   Latitude
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3" data-test="lon-hedding">
                   Longitutde
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3" data-test="observation-hedding">
                   Observation
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3" data-test="weather-hedding">
                   Weather Information
                 </th>
-                {role == "admin" && (<th scope="col" className="px-6 py-3">
+                {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<th scope="col" className="px-6 py-3" data-test="response-hedding">
                   Response
                 </th>)}
-                {role == "admin" && (<th scope="col" className="px-6 py-3">
+                {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<th scope="col" className="px-6 py-3" data-test="response-desc-hedding">
                   Response Description
                 </th>)}
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3" data-test="action-hedding">
                   Action
                 </th>
               </tr>
@@ -272,18 +272,18 @@ export default function Uploading(Observations) {
                       )}
                     </div>
                   </td>
-                  {role == "admin" && (<td className="px-6 py-4  break-words">
+                  {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<td className="px-6 py-4  break-words">
                     {r.Response.length != 0 && (<div className="">{r.Response?.map((r, i) => (<p key={i + 27}>{r}</p>))}</div>)}
                   </td>)}
-                  {role == "admin" && (<td className="px-6 py-4  break-words">
+                  {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<td className="px-6 py-4  break-words">
                     {r.ResponseDescription}
                   </td>)}
                   <td className="px-9 py-4">
                     <button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Update</button>
-                    {role == "admin" && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Delete</button>)}
-                    {role == "admin" && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Close</button>)}
-                    {role == "admin" && !r.Open && (<button onClick={() => handleOpen(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Open</button>)}
-                    {role == "admin" && (<button onClick={() => redirect(`/map/${r.Lat}/${r.Lon}/map`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Map</button>)}
+                    {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Delete</button>)}
+                    {role == "admin" || process.env.NEXT_PUBLIC_TESTING && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Close</button>)}
+                    {role == "admin" || process.env.NEXT_PUBLIC_TESTING && !r.Open && (<button onClick={() => handleOpen(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Open</button>)}
+                    {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<button onClick={() => redirect(`/map/${r.Lat}/${r.Lon}/map`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Map</button>)}
 
                   </td>
                 </tr>
