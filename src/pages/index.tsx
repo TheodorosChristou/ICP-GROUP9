@@ -242,10 +242,10 @@ export default function Uploading(Observations) {
                 <th scope="col" className="px-6 py-3" data-test="weather-hedding">
                   Weather Information
                 </th>
-                {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<th scope="col" className="px-6 py-3" data-test="response-hedding">
+                {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<th scope="col" className="px-6 py-3" data-test="response-hedding">
                   Response
                 </th>)}
-                {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<th scope="col" className="px-6 py-3" data-test="response-desc-hedding">
+                {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<th scope="col" className="px-6 py-3" data-test="response-desc-hedding">
                   Response Description
                 </th>) }
                 <th scope="col" className="px-6 py-3" data-test="action-hedding">
@@ -282,7 +282,7 @@ export default function Uploading(Observations) {
                         data-test="temp-icon"
                       />
                       {weatherHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-8rem]" data-test="temp-popup" >
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-8rem] font-bold text-black" data-test="temp-popup" >
                           <p data-test="temp-title" >Temperature: {r.WeatherTemperature}°</p>
                           <p data-test="temp-desc" >Description: {r.WeatherDescription}</p>
                         </div>
@@ -300,7 +300,7 @@ export default function Uploading(Observations) {
                         data-test="wind-icon"
                       />
                       {windHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem]" data-test="window-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem] font-bold text-black" data-test="window-popup">
                           <p data-test="wind-speed">Speed: {r.WindSpeed}</p>
                           <p data-test="wind-desc">Direction: {r.WindDirection}</p>
                         </div>
@@ -318,7 +318,7 @@ export default function Uploading(Observations) {
                         data-test="pressure-icon"
                       />
                       {pressureHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-4rem]" data-test="pressure-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-4rem] font-bold text-black" data-test="pressure-popup">
                           <p data-test="pressure-text">Pressure: {r.AtmosphericPressure}</p>
                         </div>
                       )}
@@ -335,24 +335,24 @@ export default function Uploading(Observations) {
                         data-test="humidity-icon"
                       />
                       {humitidyHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem]" data-test="humidity-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem] font-bold text-black" data-test="humidity-popup">
                           <p data-test="humidity-title">Humidity: {r.Humidity}</p>
                           <p data-test="humidity-vis">Visibility: {r.Visibility}</p>
                         </div>
                       )}
                     </div>
                   </td>
-                  {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<td className="px-6 py-4  break-words">
+                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4  break-words">
                     {r.Response.length != 0 && (<div className="">{r.Response?.map((r, i) => (<p key={i + 27}>{r}</p>))}</div>)}
                   </td>)}
-                  {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<td className="px-6 py-4  break-words">
+                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4  break-words">
                     {r.ResponseDescription}
                   </td>)}
                   <td className="px-9 py-4">
-                    <button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Update</button>
-                    {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Delete</button>)}
-                    {role == "admin" || process.env.NEXT_PUBLIC_TESTING && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Close</button>)}
-                    {role == "admin" || process.env.NEXT_PUBLIC_TESTING && (<button onClick={() => redirect(`/map/${r.Lat}/${r.Lon}/map`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-semibold mb-1 mr-1">Map</button>)}
+                    <button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Update</button>
+                    {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Delete</button>)}
+                    {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Close</button>)}
+                    {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<button onClick={() => redirect(`/map/${r.Lat}/${r.Lon}/map`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Map</button>)}
 
                   </td>
                 </tr>

@@ -71,7 +71,7 @@ export default function DynamicMap({ mapData }) {
       <div className="w-screen h-[95%] mt-20 ">
         {/* Map Rendering */}
         <MapContainer
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: '100%' }} 
           center={userLocation || [51.5072, 0.1276]}
           zoom={16}
           scrollWheelZoom={true}

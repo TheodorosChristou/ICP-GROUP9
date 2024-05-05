@@ -73,7 +73,7 @@ export default function Header() {
                 Map
               </div>
             </Link>
-            {session && role === 'admin' || process.env.NEXT_PUBLIC_TESTING && (
+            {session && (role === 'admin' || process.env.NEXT_PUBLIC_TESTING) && (
               <Link data-test="archive-ref" href="/archive" passHref>
                 <div
                   className="text-xl lg:mt-2 hover:bg-gray-300 py-2 px-4 rounded cursor-pointer"
