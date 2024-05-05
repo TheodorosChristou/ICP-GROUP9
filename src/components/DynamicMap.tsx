@@ -1,56 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L, { LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import markIcon from '../../public/img/mark.ico';
 import userIcon from '../../public/img/user.ico';
 
-
-
 export default function DynamicMap({ mapData }) {
   const [userLocation, setUserLocation] = useState<LatLngTuple | null>(null);
   const [isDefaultLocation, setIsDefaultLocation] = useState<boolean>(false);
-
-
-  // Custom Icon for other markers
-  const customIcon = new L.Icon({
-    iconUrl: markIcon.src,
-    iconSize: [78, 64],
-  });
-
-  // Custom Icon for the user's marker
-  const newUserIcon = new L.Icon({
-    iconUrl: userIcon.src,
-    iconSize: [32, 32],
-  });
+  const [hasAskedForPermission, setHasAskedForPermission] = useState<boolean>(false);
+  const [hasCenteredMap, setHasCenteredMap] = useState<boolean>(false);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     const handlePermission = async () => {
-      // Check if geolocation is supported
       if ('geolocation' in navigator) {
-        // Ask for permission
-        const permissionGranted = window.confirm(("Do you want to enable location services?"));
-        
-        if (permissionGranted) {
+        const permission = sessionStorage.getItem('geolocationPermission');
+        if (permission === 'granted') {
           try {
-            const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-              navigator.geolocation.getCurrentPosition(resolve, reject);
+            navigator.geolocation.watchPosition((position) => {
+              const { latitude, longitude } = position.coords;
+              setUserLocation([latitude, longitude]);
+              if (!hasCenteredMap && hasAskedForPermission) {
+                setHasCenteredMap(true);
+              }
             });
-
-            const { latitude, longitude } = position.coords;
-            setUserLocation([latitude, longitude]);
-          } catch (error: any) { // Explicitly type error
-            console.error(("Error getting user location:") + ' ' + error.message);
-            setUserLocation([51.5072, 0.1276]); // Use default coordinates if there is an error
+          } catch (error) {
+            console.error('Error getting user location:', error.message);
+            setUserLocation([51.5072, 0.1276]);
             setIsDefaultLocation(true);
           }
         } else {
-          setUserLocation([51.5072, 0.1276]); // Use default coordinates if permission is denied
-          setIsDefaultLocation(true);
+          const permissionGranted = window.confirm("Do you want to enable location services?");
+          if (permissionGranted) {
+            sessionStorage.setItem('geolocationPermission', 'granted');
+            setHasAskedForPermission(true);
+            handlePermission();
+          } else {
+            setUserLocation([51.5072, 0.1276]);
+            setIsDefaultLocation(true);
+          }
         }
       } else {
-        console.error(("Geolocation is not supported by your browser"));
-        setUserLocation([51.5072, 0.1276]); // Use default coordinates if geolocation is not supported
+        console.error('Geolocation is not supported by your browser');
+        setUserLocation([51.5072, 0.1276]);
         setIsDefaultLocation(true);
       }
     };
@@ -60,18 +53,38 @@ export default function DynamicMap({ mapData }) {
 
   const SetViewOnMap = () => {
     const map = useMap();
-    if (userLocation) {
+    if (userLocation && !hasCenteredMap && hasAskedForPermission) {
       map.setView(userLocation, 16);
+      setHasCenteredMap(true);
     }
     return null;
   };
 
+  const centerMapToUser = () => {
+    if (userLocation) {
+      mapRef.current.setView(userLocation, 16);
+    }
+  };
+
+  const customIcon = new L.Icon({
+    iconUrl: markIcon.src,
+    iconSize: [78, 64],
+  });
+
+  const newUserIcon = new L.Icon({
+    iconUrl: userIcon.src,
+    iconSize: [32, 32],
+  });
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
-      <div className="w-screen h-[95%] mt-20 ">
-        {/* Map Rendering */}
+    <div className="fixed inset-0 flex flex-col items-center justify-center">
+      <button className="mt-4 bg-gray-700 text-white font-bold py-2 px-4 rounded border border-gray-800" onClick={centerMapToUser}>
+        Center to Marker
+      </button>
+      <div className="w-[80%] h-[80%]">
         <MapContainer
-          style={{ width: '100%', height: '100%' }} 
+          ref={mapRef}
+          style={{ width: '100%', height: '100%' }}
           center={userLocation || [51.5072, 0.1276]}
           zoom={16}
           scrollWheelZoom={true}
@@ -80,19 +93,15 @@ export default function DynamicMap({ mapData }) {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {/* Rendering a marker for each datapoint in the mapData array */}
-          {mapData.filter((r,_i) => r.Open).map((dataPoint) => (
+          {mapData.filter((r, _i) => r.Open).map((dataPoint) => (
             <Marker position={[dataPoint.Lat, dataPoint.Lon]} icon={customIcon} key={dataPoint._id}>
-              {/* Popup for each data point */}
               <Popup>
                 <div>Lat: {dataPoint.Lat} - Lon: {dataPoint.Lon}</div>
               </Popup>
             </Marker>
           ))}
-          {/* Rendering a marker for the user with the new user icon only when permission is granted and not at the hardcoded coordinates */}
           {userLocation && (
             <Marker position={userLocation} icon={newUserIcon}>
-              {/* Popup for enabling location access */}
               <Popup>
                 <div>
                   <h3>
