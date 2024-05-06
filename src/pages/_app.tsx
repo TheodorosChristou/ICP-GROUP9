@@ -6,7 +6,6 @@ import { SessionProvider } from "next-auth/react"
 import { useEffect } from 'react';
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ConsentPopup from '../components/CookieConsent'
-import WeatherPage from '../pages/weatherpage'
 
 const queryClient = new QueryClient();
 
