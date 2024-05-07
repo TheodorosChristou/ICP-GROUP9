@@ -16,9 +16,6 @@ export default function Uploading(Observations) {
 
   let user, role;
 
-
-  
-
   if (session?.user?.name?.toString()) {
     user = session.user.name;
     role = session.user.role;
@@ -63,7 +60,6 @@ export default function Uploading(Observations) {
 
 
   }
-
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredObservations, setFilteredObservations] = useState(observations.Observations);
@@ -149,7 +145,7 @@ export default function Uploading(Observations) {
 
         <h1 data-test="archive-title" className="sm:p-3 bg-white rounded-lg w-[90%] md:max-w-sm mx-auto mt-1 font-bold text-2xl flex justify-center mb-5">Archives</h1>
 
-        <div className="overflow-y-auto shadow-md sm:rounded-lg">
+        <div className="overflow-y-auto md:max-w-full sm:w-screen shadow-md sm:rounded-lg">
           <div className="bg-gray-200">
             <input className="rounded-md p-2 bg-gray-200 hover:bg-white text-gray-900"
               type="text"
@@ -158,23 +154,23 @@ export default function Uploading(Observations) {
               placeholder="Search for tickets..."
             />
           </div>
-          <table className="table-fixed w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-
+          <table className=" table-fixed md:max-w-full sm:w-screen text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400 overflow-x-auto overflow-y-auto">
+      <thead className="text-xs w-full text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 overflow-x-auto">
+       
               <tr>
-              <th scope="col" className="px-6 py-3" data-test="ticket-hedding">
+              <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="ticket-hedding">
                   Ticket Number
                 </th>
-                <th scope="col" className="px-6 py-3" data-test="lat-hedding">
+                <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="lat-hedding">
                   Latitude
                 </th>
-                <th scope="col" className="px-6 py-3" data-test="lon-hedding">
+                <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="lon-hedding">
                   Longitutde
                 </th>
-                <th scope="col" className="px-6 py-3" data-test="observation-hedding">
+                <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="observation-hedding">
                   Observation
                 </th>
-                <th scope="col" className="px-6 py-3" data-test="weather-hedding">
+                <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="weather-hedding">
                   Weather Information
                 </th>
                 {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<th scope="col" className="px-6 py-3" data-test="response-hedding">
@@ -191,19 +187,19 @@ export default function Uploading(Observations) {
             <tbody>
               {filteredObservations?.map((r, i) => (
                 <tr className="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white  break-words">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white ">
                     {r._id.slice(-5).toUpperCase()}
                   </th>
-                  <td className="px-6 py-4  break-words">
+                  <td className="px-6 py-4 overflow-x-auto ">
                     {r.Lat}
                   </td>
-                  <td className="px-6 py-4  break-words">
+                  <td className="px-6 py-4 overflow-x-auto">
                     {r.Lon}
                   </td>
-                  <td className="px-6 py-4  break-words">
+                  <td className="px-6 py-4 overflow-x-auto ">
                     {r.Observation}
                   </td>
-                  <td className="px-6 py-4 flex items-center mt-4">
+                  <td className="px-6 py-4 mt-4 mb-4 sm:justify-center">
                     <div
                       className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setWeatherHoverIndex(i)}
@@ -222,7 +218,7 @@ export default function Uploading(Observations) {
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer ml-4"
+                      className="relative inline-block cursor-pointer "
                       onMouseEnter={() => setWindHoverIndex(i)}
                       onMouseLeave={() => setWindHoverIndex(null)}
                     >
@@ -239,7 +235,7 @@ export default function Uploading(Observations) {
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer ml-4"
+                      className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setPressureHoverIndex(i)}
                       onMouseLeave={() => setPressureHoverIndex(null)}
                     >
@@ -255,7 +251,7 @@ export default function Uploading(Observations) {
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer ml-4"
+                      className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setHumitidyHoverIndex(i)}
                       onMouseLeave={() => setHumitidyHoverIndex(null)}
                     >
@@ -272,13 +268,13 @@ export default function Uploading(Observations) {
                       )}
                     </div>
                   </td>
-                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4  break-words">
+                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4 overflow-x-auto">
                     {r.Response.length != 0 && (<div className="">{r.Response?.map((r, i) => (<p key={i + 27}>{r}</p>))}</div>)}
                   </td>)}
-                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4  break-words">
+                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4 overflow-x-auto">
                     {r.ResponseDescription}
                   </td>)}
-                  <td className="px-9 py-4">
+                  <td className="px-9 inline-grid py-4">
                     <button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black" >Update</button>
                     {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Delete</button>)}
                     {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Close</button>)}

@@ -102,8 +102,8 @@ export default function DynamicMap({ mapData }) {
   });
 
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center">
-      <div className=" w-[100%] h-[100%] z-0">
+    <div className="fixed inset-0 flex flex-col items-center justify-center z-0">
+      <div className="w-screen h-[95%] mt-14 z-0">
         <MapContainer
           ref={mapRef}
           style={{ width: '100%', height: '100%' }}
@@ -135,58 +135,57 @@ export default function DynamicMap({ mapData }) {
           )}
           <SetViewOnMap />
         </MapContainer>
-        <div className='absolute right-0'>
-          <button className="bg-cyan-700 text-white font-bold py-1.5 px-4 rounded border border-gray-800" onClick={centerMapToUser}>
-            Center to Marker
-        </button>
       </div>
-
-      </div>
-      <table className="table-fixed w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      
+          <div className='overflow-x-auto max-w-full' >
+      <table className=" table-fixed sm:max-w-full sm:w-screen sm:w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400 overflow-x-auto overflow-y-auto">
+      <thead className="text-xs w-full text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 overflow-x-auto">
               <tr>
-              <th scope="col" className="px-6 py-3" data-test="ticket-hedding">
+              <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="ticket-hedding">
                   Ticket Number
                 </th>
-                <th scope="col" className="px-6 py-3" data-test="lat-hedding">
+                <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="lat-hedding">
                   Latitude
                 </th>
-                <th scope="col" className="px-6 py-3" data-test="lon-hedding">
+                <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="lon-hedding">
                   Longitutde  
                 </th>
-                <th scope="col" className="px-6 py-3" data-test="observation-hedding">
+                <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="observation-hedding">
                   Observation
                 </th>
-                <th scope="col" className="px-6 py-3" data-test="weather-hedding">
+                <th scope="col" className="px-6 py-3 overflow-x-auto" data-test="weather-hedding">
                   Weather Information
                 </th>
-                {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<th scope="col" className="px-6 py-3" data-test="response-hedding">
+                {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<th scope="col" className="px-6 py-3 overflow-x-auto" data-test="response-hedding">
                   Response
                 </th>)}
-                {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<th scope="col" className="px-6 py-3" data-test="response-desc-hedding">
+                {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<th scope="col" className="px-6 py-3 overflow-x-auto" data-test="response-desc-hedding">
                   Response Description
                 </th>)}
                 <th scope="col" className="px-6 py-3" data-test="action-hedding">
-                  Action
+                <button className="bg-red-700 text-white font-bold py-1.5 px-4 rounded border border-gray-800" onClick={centerMapToUser}>
+                Center to Current Position 
+                </button>
                 </th>
+
               </tr>
             </thead>
             <tbody>
               {mapData?.map((r, i) => (
                 <tr className="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white  break-words">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white break-words">
                     {r._id.slice(-5).toUpperCase()}
                   </th>
-                  <td className="px-6 py-4  break-words">
+                  <td className="px-6 py-4">
                     {r.Lat}
                   </td>
-                  <td className="px-6 py-4  break-words">
+                  <td className="px-6 py-4 ">
                     {r.Lon}
                   </td>
-                  <td className="px-6 py-4  break-words">
+                  <td className="px-6 py-4 overflow-x-auto ">
                     {r.Observation}
                   </td>
-                  <td className="px-6 py-4 flex items-center mt-4">
+                  <td className="px-6 py-4 mt-4 mb-4 sm:justify-center ">
                     <div
                       className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setWeatherHoverIndex(i)}
@@ -200,14 +199,14 @@ export default function DynamicMap({ mapData }) {
                         data-test="temp-icon"
                       />
                       {weatherHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-8rem] font-bold text-black" data-test="temp-popup" >
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-1 rounded-md sm:mt-8 top-[-8rem] font-bold text-black" data-test="temp-popup" >
                           <p data-test="temp-title" >Temperature: {r.WeatherTemperature}Â°</p>
                           <p data-test="temp-desc" >Description: {r.WeatherDescription}</p>
                         </div>
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer ml-4"
+                      className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setWindHoverIndex(i)}
                       onMouseLeave={() => setWindHoverIndex(null)}
                     >
@@ -218,14 +217,14 @@ export default function DynamicMap({ mapData }) {
                         data-test="wind-icon"
                       />
                       {windHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem] font-bold text-black" data-test="window-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md sm:mt-7 top-[-7rem] font-bold text-black" data-test="window-popup">
                           <p data-test="wind-speed">Speed: {r.WindSpeed}</p>
                           <p data-test="wind-desc">Direction: {r.WindDirection}</p>
                         </div>
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer ml-4"
+                      className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setPressureHoverIndex(i)}
                       onMouseLeave={() => setPressureHoverIndex(null)}
                     >
@@ -236,13 +235,13 @@ export default function DynamicMap({ mapData }) {
                         data-test="pressure-icon"
                       />
                       {pressureHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-4rem] font-bold text-black" data-test="pressure-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md top-[-4rem] font-bold text-black" data-test="pressure-popup">
                           <p data-test="pressure-text">Pressure: {r.AtmosphericPressure}</p>
                         </div>
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer ml-4"
+                      className="relative inline-block cursor-pointer "
                       onMouseEnter={() => setHumitidyHoverIndex(i)}
                       onMouseLeave={() => setHumitidyHoverIndex(null)}
                     >
@@ -253,20 +252,20 @@ export default function DynamicMap({ mapData }) {
                         data-test="humidity-icon"
                       />
                       {humitidyHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem] font-bold text-black" data-test="humidity-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md sm:mt-8 top-[-7rem] font-bold text-black" data-test="humidity-popup">
                           <p data-test="humidity-title">Humidity: {r.Humidity}</p>
                           <p data-test="humidity-vis">Visibility: {r.Visibility}</p>
                         </div>
                       )}
                     </div>
                   </td>
-                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4  break-words">
+                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4  overflow-x-auto">
                     {r.Response.length != 0 && (<div className="">{r.Response?.map((r, i) => (<p key={i + 27}>{r}</p>))}</div>)}
                   </td>)}
-                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4  break-words">
+                  {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<td className="px-6 py-4  overflow-x-auto">
                     {r.ResponseDescription}
                   </td>)}
-                  <td className="px-6 py-4  break-words">
+                  <td className="px-6 py-4 ">
                     <button className="bg-cyan-700 text-white font-bold py-1.5 px-4 rounded border border-gray-800" onClick={() => centerMapToPoint(r.Lat,r.Lon)}>
                       Center to Incident
                     </button>
@@ -275,7 +274,7 @@ export default function DynamicMap({ mapData }) {
               ))}
             </tbody>
           </table>
-
+        </div>
     </div>
   );
 }
