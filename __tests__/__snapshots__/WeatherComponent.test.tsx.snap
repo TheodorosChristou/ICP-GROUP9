@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WeatherPage matches snapshot 1`] = `
-<DocumentFragment>
-  <div />
-</DocumentFragment>
-`;
+exports[`WeatherPage matches snapshot 1`] = `<DocumentFragment />`;

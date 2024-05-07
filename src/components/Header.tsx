@@ -52,6 +52,8 @@ export default function Header() {
             <button
               onClick={toggleMenu}
               className="text-xl text-black hover:bg-gray-300 p-1 rounded-full"
+              aria-label="menu"
+
             >
               {menuOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
             </button>

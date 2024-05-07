@@ -112,9 +112,9 @@ export default function ObservationForm(props) {
         
             </div>
             <div className="ml">
-            <label className="font-semibold ml-2"> {"Observation"} </label>
+            <label className="font-semibold ml-2" id="observationLabel"> {"Observation"} </label>
             <div>
-            <textarea className="border-2 rounded-md p-2 ml-2 text-black w-full resize-none" id="Observation"{...register("Observation")} />
+            <textarea className="border-2 rounded-md p-2 ml-2 text-black w-full resize-none" id="ObservationLabel" aria-labelledby="observationLabel" {...register("Observation")} />
           <p>{errors.Observation?.message}</p>
           </div>
           

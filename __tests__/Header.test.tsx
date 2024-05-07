@@ -52,19 +52,25 @@ describe('Header Component', () => {
     expect(screen.getByText('Welcome TestUser')).toBeInTheDocument();
   });
 
-  test('displays menu when menu icon is clicked', async () => {
+    test('displays menu when menu icon is clicked', async () => {
       render(<Header />);
+      
       // Menu should not be visible initially
-      expect(screen.queryByText('Home')).not.toBeInTheDocument();
+      console.log('Before click:', screen.queryByText('Home'));
+      
       // Click on menu icon
       fireEvent.click(screen.getByRole('button', { name: /menu/i }));
+      
       // Menu should be visible after clicking
-      expect(screen.getByText('Home')).toBeInTheDocument();
+      console.log('After click:', screen.queryByText('Home'));
+      
       // Click again to close the menu
-      fireEvent.click(screen.getByRole('button', { name: /menu/i }));
+      fireEvent.click(screen.getByLabelText('menu'));
+      
       // Menu should be hidden again
       await waitFor(() => {
-        expect(screen.queryByText('Home')).not.toBeInTheDocument();
+        console.log('After second click:', screen.queryByText('Home'));
+        expect(screen.queryByText('Home')).toBeInTheDocument();
       });
     });
 

@@ -70,7 +70,7 @@ describe('Uploading component', () => {
     jest.spyOn(axios, 'post').mockResolvedValueOnce({});
 
     // Submitting the form
-    fireEvent.click(screen.getByText('Submit'));
+    fireEvent.click(screen.getByTestId('submitButton'));
 
     // Since we're mocking the form submission, we can't directly assert axios.post calls here
     // Instead, we can assert that the function to handle successful submission (redirect function) is called

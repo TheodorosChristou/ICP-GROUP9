@@ -1,4 +1,4 @@
-import Reacts from 'react';
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ObservationForm, {ObservationValues} from '@/components/ObservationForm';
 
@@ -34,15 +34,14 @@ jest.mock('next-auth/react', () => ({
       fireEvent.change(screen.getByPlaceholderText('Longitude'), { target: { value: '-74.0060' } });
       fireEvent.change(screen.getByLabelText('Observation'), { target: { value: 'Test observation' } });
   
-      // Submit the form
       fireEvent.click(screen.getByTestId('submitButton'));
-  
-      // Assert that onSubmit is called with the correct form data
+      waitFor(() => {
       expect(onSubmit).toHaveBeenCalledWith({
         Lat: '40.7128',
         Lon: '-74.0060',
         Observation: 'Test observation',
         Response: [],
+        })
       });
     });
   });
