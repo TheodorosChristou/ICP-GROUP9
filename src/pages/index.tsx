@@ -9,7 +9,6 @@ import { GetServerSideProps } from 'next';
 import dbConnect from '../../lib/dbConnect';
 import WeatherComponent, { WeatherResponse } from '../components/WeatherComponent';
 import { Card, Typography } from "@material-tailwind/react";
-import Fuse from 'fuse.js';
 
 export default function Uploading(Observations) {
 
@@ -214,7 +213,7 @@ export default function Uploading(Observations) {
 
 
         <div className="overflow-y-auto shadow-md sm:rounded-lg">
-          <div className="bg-gray-200">
+          <div className="bg-gray-400">
             <input className="rounded-md p-2 bg-gray-200 hover:bg-white text-gray-900"
               type="text"
               value={searchTerm}
@@ -353,7 +352,6 @@ export default function Uploading(Observations) {
                     <button onClick={() => redirect(`/route/${r._id}/update/`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Update</button>
                     {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Delete</button>)}
                     {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Close</button>)}
-                    {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<button onClick={() => redirect(`/map/${r.Lat}/${r.Lon}/map`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Map</button>)}
 
                   </td>
                 </tr>
