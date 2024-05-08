@@ -279,8 +279,6 @@ export default function Uploading(Observations) {
                     {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<button onClick={() => handleDelete(r._id)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Delete</button>)}
                     {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && r.Open && (<button onClick={() => handleClose(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Close</button>)}
                     {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && !r.Open && (<button onClick={() => handleOpen(r)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Open</button>)}
-                    {(role == "admin" || process.env.NEXT_PUBLIC_TESTING) && (<button onClick={() => redirect(`/map/${r.Lat}/${r.Lon}/map`)} className="bg-sky-400 bg rounded-full py-1 px-1 xs:px-3 sm:px-3 font-bold mb-1 mr-1 text-black">Map</button>)}
-
                   </td>
                 </tr>
               ))}
