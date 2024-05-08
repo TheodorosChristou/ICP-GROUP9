@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import L, { LatLngTuple } from 'leaflet';
+import L, { LatLngTuple, Map } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import markIcon from '../../public/img/mark.ico';
 import userIcon from '../../public/img/user.ico';
@@ -12,7 +12,7 @@ export default function DynamicMap({ mapData }) {
   const [isDefaultLocation, setIsDefaultLocation] = useState<boolean>(false);
   const [hasAskedForPermission, setHasAskedForPermission] = useState<boolean>(false);
   const [hasCenteredMap, setHasCenteredMap] = useState<boolean>(false);
-  const mapRef = useRef(null);
+  const mapRef = useRef<Map | null>(null);
   const [weatherHoverIndex, setWeatherHoverIndex] = useState(null);
   const [windHoverIndex, setWindHoverIndex] = useState(null);
   const [pressureHoverIndex, setPressureHoverIndex] = useState(null);
@@ -105,13 +105,13 @@ export default function DynamicMap({ mapData }) {
   };
 
   const centerMapToUser = () => {
-    if (userLocation) {
+    if (userLocation && mapRef.current) {
       mapRef.current.setView(userLocation, 16);
     }
   };
   
   const centerMapToPoint = (lat,lon) => {
-    if (lat != null && lon != null) {
+    if (lat != null && lon != null && mapRef.current) {
       console.log(lat,lon)
       mapRef.current.setView([lat,lon], 16);
     }
