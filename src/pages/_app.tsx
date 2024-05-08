@@ -6,7 +6,7 @@ import { SessionProvider } from "next-auth/react"
 import { useEffect } from 'react';
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ConsentPopup from '../components/CookieConsent'
-import WeatherPage from '../pages/weatherpage'
+//import WeatherPage from '../pages/weatherpage'
 import { Workbox } from "workbox-window";
 
 const queryClient = new QueryClient();
@@ -23,7 +23,7 @@ function MyApp({Component, pageProps: {session, ...pageProps}}) {
         });
         wb.messageSW({ type: "SKIP_WAITING" });
       });
-      //wb.register();
+      wb.register();
     }
   }, []);
   
