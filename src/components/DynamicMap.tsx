@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import markIcon from '../../public/img/mark.ico';
 import userIcon from '../../public/img/user.ico';
 import { useSession } from 'next-auth/react';
+import { map } from 'cypress/types/bluebird';
 
 export default function DynamicMap({ mapData }) {
   const [userLocation, setUserLocation] = useState<LatLngTuple | null>(null);
@@ -23,7 +24,32 @@ export default function DynamicMap({ mapData }) {
   let user, role;
 
 
-  
+  const observations = mapData
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredObservations, setFilteredObservations] = useState(observations.Observations);
+
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  useEffect(() => {
+    console.log("Search term changed:", searchTerm);
+    const filtered = observations.filter(observation => {
+
+      const observationMatch = observation.Observation.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const latMatch = observation.Lat.toString().includes(searchTerm);
+      const lonMatch = observation.Lon.toString().includes(searchTerm);
+      const ticketMatch = observation._id.toLowerCase().includes(searchTerm.toLowerCase());
+
+      return observationMatch || latMatch || lonMatch || ticketMatch;
+    });
+
+
+    console.log("Filtered observations:", filtered);
+    setFilteredObservations(filtered);
+  }, [searchTerm, mapData]);
 
   if (session?.user?.name?.toString()) {
     user = session.user.name;
@@ -118,17 +144,17 @@ export default function DynamicMap({ mapData }) {
           {mapData.filter((r, _i) => r.Open).map((dataPoint) => (
             <Marker position={[dataPoint.Lat, dataPoint.Lon]} icon={customIcon} key={dataPoint._id}>
               <Popup>
-                <div>Lat: {dataPoint.Lat} - Lon: {dataPoint.Lon}</div>
+                <div className='text-gray-900 font-bold '> <p> Latitude: {dataPoint.Lat}</p> <p> Longitude: {dataPoint.Lon} </p></div>
               </Popup>
             </Marker>
           ))}
           {userLocation && (
             <Marker position={userLocation} icon={newUserIcon}>
               <Popup>
-                <div>
-                  <h3>
-                    Latitude: {userLocation[0].toFixed(6)}, Longitude: {userLocation[1].toFixed(6)}
-                  </h3>
+                <div className='text-gray-900 font-bold'>
+                  <h1>
+                    <p> Latitude: {userLocation[0].toFixed(6)} </p> <p> Longitude: {userLocation[1].toFixed(6)} </p>
+                  </h1>
                 </div>
               </Popup>
             </Marker>
@@ -136,8 +162,19 @@ export default function DynamicMap({ mapData }) {
           <SetViewOnMap />
         </MapContainer>
       </div>
+
       
           <div className='overflow-x-auto max-w-full' >
+            
+      <div className="bg-gray-400">
+            <input className="rounded-md p-2 bg-gray-200 hover:bg-white text-gray-900"
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder="Search for tickets..."
+              data-test="search-bar"
+            />
+      </div>
       <table className=" table-fixed sm:max-w-full sm:w-screen sm:w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400 overflow-x-auto overflow-y-auto">
       <thead className="text-xs w-full text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 overflow-x-auto">
               <tr>
@@ -171,7 +208,7 @@ export default function DynamicMap({ mapData }) {
               </tr>
             </thead>
             <tbody>
-              {mapData?.map((r, i) => (
+              {filteredObservations?.filter((r, _i) => r.Open).map((r, i) => (
                 <tr className="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white break-words">
                     {r._id.slice(-5).toUpperCase()}
