@@ -23,7 +23,7 @@ function MyApp({Component, pageProps: {session, ...pageProps}}) {
         });
         wb.messageSW({ type: "SKIP_WAITING" });
       });
-      wb.register();
+      //wb.register();
     }
   }, []);
   

@@ -74,8 +74,8 @@ export default function ObservationForm(props) {
 
   return (
     <div className="flex justify-center">
-      <div className="pt-10 w-[40%]">
-        <div className="space-y-3 bg-gradient-to-r from-sky-500 via-40% to-emerald-500 to-90% text-black border-2 border-slate-900 p-7 rounded-lg h-full">
+      <div className="pt-10 w-full sm:w-2/3 md:w-1/2 lg:w-1/3"> {/* Responsive width */}
+        <div className="space-y-3 bg-gradient-to-r from-sky-500 via-40% to-emerald-500 to-90% text-black border-2 border-slate-900 p-7 rounded-lg">
           <form
             onSubmit={handleSubmit((data) => {
 
@@ -89,37 +89,39 @@ export default function ObservationForm(props) {
               onSubmit({ ...data, Response: selectedOptions });
             })}
           >
-            <div className="flex justify-around mb-5">
-            <div>
-              <input
+             <div className="flex flex-col sm:flex-row justify-between mb-5"> {/* Responsive flex layout */}
+              <div className="mb-3 sm:w-1/2 sm:mr-2"> {/* Responsive width and margin */}
+                <input
                 {...register("Lat", FieldValidation(valid))}
-                className="border-2 rounded-md p-3 ml-2 text-black"
+                className="border-2 rounded-md p-3 ml-2 text-black w-full"
                 type="float"
                 placeholder={"Latitude"}
+                data-test="lat-input"
               />
-              <p>{errors.Lat?.message}</p>
+              <p data-test="lat-invalid">{errors.Lat?.message}</p>
             </div>
 
-            <div>
+            <div className="mb-3 sm:w-1/2 sm:ml-2"> {/* Responsive width and margin */}
               <input
                 {...register("Lon", FieldValidation(valid))}
-                className="border-2 rounded-md p-3 ml-2 text-black "
+                className="border-2 rounded-md p-3 ml-2 text-black w-full"
                 type="float"
                 placeholder={"Longitute"}
+                data-test="lon-input"
               />
-              <p>{errors.Lon?.message}</p>
+              <p data-test="lon-invalid">{errors.Lon?.message}</p>
             </div>
         
             </div>
-            <div className="ml-16">
+            <div className="ml">
             <label className="font-semibold ml-2"> {"Observation"} </label>
             <div>
-            <textarea className="border-2 rounded-md p-2 ml-2 text-black w-[60%] resize-none" id="Observation"{...register("Observation")} />
+            <textarea data-test="observation-text" className="border-2 rounded-md p-2 ml-2 text-black w-full resize-none" id="Observation"{...register("Observation")} />
           <p>{errors.Observation?.message}</p>
           </div>
           
           {role == 'admin' && (
-              <div className="mt-2 ml-2">
+              <div className="mb-3">
                 <label className="font-semibold">Response:</label>
                 {ResponseList.map((option) => (
                   <div key={option}>
@@ -142,10 +144,10 @@ export default function ObservationForm(props) {
             )}
 
             {(role == "admin" && (
-              <div className="mt-2 ml-2">
+              <div className="ml">
             <label className="font-semibold"> {"Response Description"} </label>
             <div>
-            <textarea className="border-2 rounded-md p-2 text-black w-[60%] resize-none" id="ResponseDescription"{...register("ResponseDescription")} />
+            <textarea data-test="observation-text" className="border-2 rounded-md p-2 text-black w-full resize-none" id="ResponseDescription"{...register("ResponseDescription")} />
           <p>{errors.ResponseDescription?.message}</p>
           </div>
               </div>
@@ -153,9 +155,15 @@ export default function ObservationForm(props) {
           </div>
 
             <div className="flex justify-center">
-              <div className="flex justify-center mt-5 rounded-full">
-                <button data-testid="submitButton" className="bg-blue text-white text-l bg rounded-full py-4 sm:px-5 font-semibold">{"Submit Incident"}</button>
-              </div>
+              <div className="flex justify-center">
+              <button
+              data-testid="submitButton"
+              data-test="submitButton"
+              className="bg-blue text-white text-sm sm:text-base rounded-full py-2 sm:py-3 px-3 sm:px-4 font-semibold"
+                  >
+                 Submit Incident
+                </button>
+                </div>
             </div>
           </form>
 
