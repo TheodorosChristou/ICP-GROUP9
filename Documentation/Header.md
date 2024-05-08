@@ -28,7 +28,7 @@ export default YourComponent;
     <div className="...">
       <div className="...">
         <Link href="/">
-          <Image alt="Maritime Logo" src="/img/anchor.png" width={60} height={60} className="..." />
+          <Image alt="Maritime Logo" src="/img/Anchor.png" width={60} height={60} className="..." />
         </Link>
       </div>
       <div className="...">

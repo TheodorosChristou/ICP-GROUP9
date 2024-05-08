@@ -32,7 +32,7 @@ export default function Header() {
               <Link href="/">
                 <Image
                   alt="Maritime Logo"
-                  src="/img/anchor.png"
+                  src="/img/Anchor.png"
                   width={60}
                   height={60}
                   className="cursor-pointer max-h-sm max-w-lg py-3 mt-0"
