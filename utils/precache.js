@@ -8,14 +8,9 @@ const pages = [
     precacheJson: false, // no props
   },
   {
-    route: '/about',
+    route: '/map',
     precacheHtml: false,
-    precacheJson: true,
-  },
-  {
-    route: '/denizens',
-    precacheHtml: true, // this is now the start url for A2HS
-    precacheJson: true,
+    precacheJson: false,
   },
 ];
 
