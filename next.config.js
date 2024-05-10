@@ -20,7 +20,9 @@ const withPWA = require('next-pwa')({
     }), 
     ...getGeneratedPrecacheEntries(buildId),
   ],
-  buildExcludes: [/middleware-manifest\.json$/],
+  buildExcludes: [/middleware-manifest\.json$/,
+   /_buildManifest\.js$/,
+  ],
 })
 
 
