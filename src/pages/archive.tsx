@@ -200,20 +200,22 @@ export default function Uploading(Observations) {
                     {r.Observation}
                   </td>
                   <td className="px-6 py-4 mt-4 mb-4 sm:justify-center">
-                    <div
+                  <div
                       className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setWeatherHoverIndex(i)}
                       onMouseLeave={() => setWeatherHoverIndex(null)}
                     >
                       <img
+                      
                         src="/img/weather.ico"
                         alt="Weather icon"
                         className="h-5 w-5 text-blue-500 hover:text-blue-600 "
+                        data-test="temp-icon"
                       />
                       {weatherHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-8rem]">
-                          <p>Temperature: {r.WeatherTemperature}°</p>
-                          <p>Description: {r.WeatherDescription}</p>
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-10 md::mt-15 top-[-10rem] font-bold text-black" data-test="temp-popup" >
+                          <p data-test="temp-title" >Temperature: {r.WeatherTemperature}°</p>
+                          <p data-test="temp-desc" >Description: {r.WeatherDescription}</p>
                         </div>
                       )}
                     </div>
@@ -226,16 +228,17 @@ export default function Uploading(Observations) {
                         src="/img/wind.ico"
                         alt="Wind icon"
                         className="h-5 w-5 text-green-500 hover:text-green-600"
+                        data-test="wind-icon"
                       />
                       {windHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem]">
-                          <p>Speed: {r.WindSpeed}</p>
-                          <p>Direction: {r.WindDirection}</p>
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-8 top-[-8rem] font-bold text-black" data-test="window-popup">
+                          <p data-test="wind-speed">Speed: {r.WindSpeed}</p>
+                          <p data-test="wind-desc">Direction: {r.WindDirection}</p>
                         </div>
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer"
+                      className="relative inline-block cursor-pointer "
                       onMouseEnter={() => setPressureHoverIndex(i)}
                       onMouseLeave={() => setPressureHoverIndex(null)}
                     >
@@ -243,10 +246,11 @@ export default function Uploading(Observations) {
                         src="/img/pressure.ico"
                         alt="Pressure icon"
                         className="h-5 w-5 text-green-500 hover:text-green-600"
+                        data-test="pressure-icon"
                       />
                       {pressureHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-4rem]">
-                          <p>Pressure: {r.AtmosphericPressure}</p>
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-2 top-[-4rem] font-bold text-black" data-test="pressure-popup">
+                          <p data-test="pressure-text">Pressure: {r.AtmosphericPressure}</p>
                         </div>
                       )}
                     </div>
@@ -259,11 +263,12 @@ export default function Uploading(Observations) {
                         src="/img/humitidy.ico"
                         alt="Humitidy icon"
                         className="h-5 w-5 text-green-500 hover:text-green-600"
+                        data-test="humidity-icon"
                       />
                       {humitidyHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-1 top-[-7rem]">
-                          <p>Humidity: {r.Humidity}</p>
-                          <p>Visibility: {r.Visibility}</p>
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-8 top-[-8rem] font-bold text-black" data-test="humidity-popup">
+                          <p data-test="humidity-title">Humidity: {r.Humidity}</p>
+                          <p data-test="humidity-vis">Visibility: {r.Visibility}</p>
                         </div>
                       )}
                     </div>

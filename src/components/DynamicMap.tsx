@@ -223,7 +223,7 @@ export default function DynamicMap({ mapData }) {
                     {r.Observation}
                   </td>
                   <td className="px-6 py-4 mt-4 mb-4 sm:justify-center ">
-                    <div
+                  <div
                       className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setWeatherHoverIndex(i)}
                       onMouseLeave={() => setWeatherHoverIndex(null)}
@@ -236,14 +236,14 @@ export default function DynamicMap({ mapData }) {
                         data-test="temp-icon"
                       />
                       {weatherHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-1 rounded-md sm:mt-8 top-[-8rem] font-bold text-black" data-test="temp-popup" >
-                          <p data-test="temp-title" >Temperature: {r.WeatherTemperature}Â°</p>
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-10 md::mt-15 top-[-10rem] font-bold text-black" data-test="temp-popup" >
+                          <p data-test="temp-title" >Temperature: {r.WeatherTemperature}°</p>
                           <p data-test="temp-desc" >Description: {r.WeatherDescription}</p>
                         </div>
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer"
+                      className="relative inline-block cursor-pointer "
                       onMouseEnter={() => setWindHoverIndex(i)}
                       onMouseLeave={() => setWindHoverIndex(null)}
                     >
@@ -254,14 +254,14 @@ export default function DynamicMap({ mapData }) {
                         data-test="wind-icon"
                       />
                       {windHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md sm:mt-7 top-[-7rem] font-bold text-black" data-test="window-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-8 top-[-8rem] font-bold text-black" data-test="window-popup">
                           <p data-test="wind-speed">Speed: {r.WindSpeed}</p>
                           <p data-test="wind-desc">Direction: {r.WindDirection}</p>
                         </div>
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer"
+                      className="relative inline-block cursor-pointer "
                       onMouseEnter={() => setPressureHoverIndex(i)}
                       onMouseLeave={() => setPressureHoverIndex(null)}
                     >
@@ -272,13 +272,13 @@ export default function DynamicMap({ mapData }) {
                         data-test="pressure-icon"
                       />
                       {pressureHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md top-[-4rem] font-bold text-black" data-test="pressure-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-2 top-[-4rem] font-bold text-black" data-test="pressure-popup">
                           <p data-test="pressure-text">Pressure: {r.AtmosphericPressure}</p>
                         </div>
                       )}
                     </div>
                     <div
-                      className="relative inline-block cursor-pointer "
+                      className="relative inline-block cursor-pointer"
                       onMouseEnter={() => setHumitidyHoverIndex(i)}
                       onMouseLeave={() => setHumitidyHoverIndex(null)}
                     >
@@ -289,7 +289,7 @@ export default function DynamicMap({ mapData }) {
                         data-test="humidity-icon"
                       />
                       {humitidyHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md sm:mt-8 top-[-7rem] font-bold text-black" data-test="humidity-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-8 top-[-8rem] font-bold text-black" data-test="humidity-popup">
                           <p data-test="humidity-title">Humidity: {r.Humidity}</p>
                           <p data-test="humidity-vis">Visibility: {r.Visibility}</p>
                         </div>

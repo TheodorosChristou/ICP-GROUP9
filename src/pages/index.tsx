@@ -282,7 +282,7 @@ export default function Uploading(Observations) {
                         data-test="temp-icon"
                       />
                       {weatherHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-10 md::mt-15 top-[-8rem] font-bold text-black" data-test="temp-popup" >
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-10 md::mt-15 top-[-10rem] font-bold text-black" data-test="temp-popup" >
                           <p data-test="temp-title" >Temperature: {r.WeatherTemperature}°</p>
                           <p data-test="temp-desc" >Description: {r.WeatherDescription}</p>
                         </div>
@@ -300,7 +300,7 @@ export default function Uploading(Observations) {
                         data-test="wind-icon"
                       />
                       {windHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-8 top-[-7rem] font-bold text-black" data-test="window-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-8 top-[-8rem] font-bold text-black" data-test="window-popup">
                           <p data-test="wind-speed">Speed: {r.WindSpeed}</p>
                           <p data-test="wind-desc">Direction: {r.WindDirection}</p>
                         </div>
@@ -335,7 +335,7 @@ export default function Uploading(Observations) {
                         data-test="humidity-icon"
                       />
                       {humitidyHoverIndex === i && (
-                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-8 top-[-7rem] font-bold text-black" data-test="humidity-popup">
+                        <div className="absolute bg-white border border-gray-300 shadow-md p-2 rounded-md mt-8 top-[-8rem] font-bold text-black" data-test="humidity-popup">
                           <p data-test="humidity-title">Humidity: {r.Humidity}</p>
                           <p data-test="humidity-vis">Visibility: {r.Visibility}</p>
                         </div>
