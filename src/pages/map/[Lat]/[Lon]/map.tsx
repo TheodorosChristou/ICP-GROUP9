@@ -5,7 +5,7 @@ import ObservationModel, { ObservationInterface } from '../../../../../models/Ob
 import dynamic from 'next/dynamic';
 
 // Dynamic map, using Next.js dynamic for lazy loading for performance
-const DynamicMap = dynamic(() => import("../../../../components/DynamicMap2"), {
+const DynamicMap = dynamic(() => import("../../../../components/DynamicMap"), {
   ssr: false,
 });
 // This helps with shaping the data that the DynamicMap will receive  from the mapData prop
