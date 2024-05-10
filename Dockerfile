@@ -1,6 +1,7 @@
-FROM node:17 as base 
+FROM node:22 as base
+ENV NODE_OPTIONS=--max_old_space_size=1700
 
-WORKDIR /
+WORKDIR /usr/build
 
 COPY package.json ./
 
